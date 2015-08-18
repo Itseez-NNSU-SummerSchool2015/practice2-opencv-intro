@@ -28,11 +28,15 @@ class Application
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
 		cv::Rect saveButtonPlace;
+		cv::Rect CVT_CONVERT_GRAY_ButtonPlace;
+        cv::Rect PIXELIZED_ButtonPlace;
+		cv::Rect CANNY_ButtonPlace;
 		bool saveState;
+		Processing::FilterType filter;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
-    int processFrame(const cv::Mat& src, cv::Mat& dst);
+    int processFrame(const cv::Mat& src, cv::Mat& dst, Processing::FilterType filter);
     int showFrame(const std::string &caption, 
                   const cv::Mat& src, cv::Mat& dst);
     friend void onButtonsOnOffClick(int eventId, int x, int y, 
@@ -41,6 +45,7 @@ class Application
     { 
         guiState.state = OnFilter;
 		guiState.saveState=false;
+		guiState.filter=Processing::MEDIAN;
     };
 
  private:
