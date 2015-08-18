@@ -125,7 +125,7 @@ int Application::showFrame(const std::string &caption, const Mat& src, Mat& dst)
     return key;
 }
 
-void onButtonClick(int eventId, int x, int y, int flsgs, void *userData) 
+void Application::onButtonClick(int eventId, int x, int y, int flsgs, void *userData) 
 {
 	if (eventId != EVENT_LBUTTONDOWN) 
 	{
@@ -133,44 +133,44 @@ void onButtonClick(int eventId, int x, int y, int flsgs, void *userData)
 	}
 	Application* app = static_cast<Application*>(userData);
 	
-	if (onButtonClicked(app->guiState.onButtonPlace, x, y))
+	if (isButtonClicked(app->guiState.onButtonPlace, x, y))
     {
         app->guiState.state = Application::OnFilter;
         return;
     }
-    if (onButtonClicked(app->guiState.offButtonPlace, x, y))
+    if (isButtonClicked(app->guiState.offButtonPlace, x, y))
     {
         app->guiState.state = Application::OffFilter;
         return;
     }
-	if (onButtonClicked(app->guiState.saveButtonPlace, x, y)) 
+	if (isButtonClicked(app->guiState.saveButtonPlace, x, y)) 
 	{
 		imwrite(std::to_string((long long)clock()) + ".png", *app->butonClickHandleArgs.dstBuf);
 		return;
 	}
-	if (onButtonClicked(app->guiState.filterBlurButtonPlace, x, y)) 
+	if (isButtonClicked(app->guiState.filterBlurButtonPlace, x, y)) 
 	{
 		app->processor.setFilterType(FilterType::Blur);
 		return;
 	}
-	if (onButtonClicked(app->guiState.filterCannyButtonPlace, x, y)) 
+	if (isButtonClicked(app->guiState.filterCannyButtonPlace, x, y)) 
 	{
 		app->processor.setFilterType(FilterType::Canny);
 		return;
 	}
-	if (onButtonClicked(app->guiState.filterGrayscaleButtonPlace, x, y)) 
+	if (isButtonClicked(app->guiState.filterGrayscaleButtonPlace, x, y)) 
 	{
 		app->processor.setFilterType(FilterType::Grayscale);
 		return;
 	}
-	if (onButtonClicked(app->guiState.filterPixelizeButtonPlace, x, y)) 
+	if (isButtonClicked(app->guiState.filterPixelizeButtonPlace, x, y)) 
 	{
 		app->processor.setFilterType(FilterType::Pixelize);
 		return;
 	}
 }
 
-bool onButtonClicked(cv::Rect buttonPlace, int x, int y)
+bool Application::isButtonClicked(cv::Rect buttonPlace, int x, int y)
 {
     if (x < buttonPlace.x || x > buttonPlace.x + buttonPlace.width ||
         y < buttonPlace.y || y > buttonPlace.y + buttonPlace.height)

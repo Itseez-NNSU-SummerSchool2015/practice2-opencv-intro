@@ -37,7 +37,7 @@ class Application
     int processFrame(const cv::Mat& src, cv::Mat& dst);
     int showFrame(const std::string &caption, 
                   const cv::Mat& src, cv::Mat& dst);
-	friend void onButtonClick(int eventId, int x, int y, int flags, void *userData);
+
     Application() 
     { 
         guiState.state = OnFilter;
@@ -52,8 +52,8 @@ class Application
 		cv::Mat* dstBuf;
 	};
 	ButonClickHandleArgs butonClickHandleArgs;
+	static void onButtonClick(int eventId, int x, int y, int flags, void *userData);
+    static bool isButtonClicked(cv::Rect buttonPlace, int x, int y);
 
     int drawButtons(cv::Mat &display);
-    
-    friend bool onButtonClicked(cv::Rect buttonPlace, int x, int y);
 };
