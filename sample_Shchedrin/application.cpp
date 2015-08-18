@@ -59,7 +59,7 @@ int Application::drawButtons(Mat &display)
               guiState.offButtonPlace.y + guiState.offButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
     putText(display, "save", 
-        Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 20,
+        Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 35,
               guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
