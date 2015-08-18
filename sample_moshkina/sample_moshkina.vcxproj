@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{800EF7E1-F672-4B27-8DC0-481916AFFC4D}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>sample_moshkina</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Temp\moshkina\practice2-opencv-intro\bin\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">sample_moshkina.dir\Debug\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">sample_moshkina</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Temp\moshkina\practice2-opencv-intro\bin\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">sample_moshkina.dir\Release\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">sample_moshkina</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:/OpenCV-2.4.11/opencv/build/include;C:/OpenCV-2.4.11/opencv/build/include/opencv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>Debug</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>C:/Temp/moshkina/practice2-opencv-intro/bin/sample_moshkina.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:/OpenCV-2.4.11/opencv/build/include;C:/OpenCV-2.4.11/opencv/build/include/opencv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:/OpenCV-2.4.11/opencv/build/include;C:/OpenCV-2.4.11/opencv/build/include/opencv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:x64 /debug %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_videostab2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_video2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_ts2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_superres2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_stitching2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_photo2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_ocl2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_objdetect2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_nonfree2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_ml2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_legacy2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_imgproc2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_highgui2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_gpu2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_flann2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_features2d2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_core2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_contrib2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_calib3d2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_nonfree2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_ocl2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_gpu2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_photo2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_objdetect2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_legacy2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_video2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_ml2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_calib3d2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_features2d2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_highgui2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_imgproc2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_flann2411d.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_core2411d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>C:/Temp/moshkina/practice2-opencv-intro/lib/Debug/sample_moshkina.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Temp/moshkina/practice2-opencv-intro/bin/sample_moshkina.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:/OpenCV-2.4.11/opencv/build/include;C:/OpenCV-2.4.11/opencv/build/include/opencv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat></DebugInformationFormat>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>Release</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>C:/Temp/moshkina/practice2-opencv-intro/bin/sample_moshkina.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:/OpenCV-2.4.11/opencv/build/include;C:/OpenCV-2.4.11/opencv/build/include/opencv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:/OpenCV-2.4.11/opencv/build/include;C:/OpenCV-2.4.11/opencv/build/include/opencv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:x64 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_videostab2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_video2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_ts2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_superres2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_stitching2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_photo2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_ocl2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_objdetect2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_nonfree2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_ml2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_legacy2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_imgproc2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_highgui2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_gpu2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_flann2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_features2d2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_core2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_contrib2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_calib3d2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_nonfree2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_ocl2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_gpu2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_photo2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_objdetect2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_legacy2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_video2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_ml2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_calib3d2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_features2d2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_highgui2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_imgproc2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_flann2411.lib;C:\OpenCV-2.4.11\opencv\build\x64\vc10\lib\opencv_core2411.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <ImportLibrary>C:/Temp/moshkina/practice2-opencv-intro/lib/Release/sample_moshkina.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Temp/moshkina/practice2-opencv-intro/bin/sample_moshkina.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Temp/moshkina/practice2-opencv-intro/sample_moshkina/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"c:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HC:/Temp/moshkina/practice2-opencv-intro -BC:/Temp/moshkina/practice2-opencv-intro --check-stamp-file C:\Temp\moshkina\practice2-opencv-intro\sample_moshkina\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/Temp/moshkina/practice2-opencv-intro/sample_moshkina/CMakeLists.txt;C:\Temp\moshkina\practice2-opencv-intro\sample_moshkina\CMakeLists.txt;C:\Temp\moshkina\practice2-opencv-intro\sample_moshkina\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Temp\moshkina\practice2-opencv-intro\sample_moshkina\CMakeFiles\generate.stamp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Temp/moshkina/practice2-opencv-intro/sample_moshkina/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"c:\Program Files (x86)\CMake 2.8\bin\cmake.exe" -HC:/Temp/moshkina/practice2-opencv-intro -BC:/Temp/moshkina/practice2-opencv-intro --check-stamp-file C:\Temp\moshkina\practice2-opencv-intro\sample_moshkina\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/Temp/moshkina/practice2-opencv-intro/sample_moshkina/CMakeLists.txt;C:\Temp\moshkina\practice2-opencv-intro\sample_moshkina\CMakeLists.txt;C:\Temp\moshkina\practice2-opencv-intro\sample_moshkina\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Temp\moshkina\practice2-opencv-intro\sample_moshkina\CMakeFiles\generate.stamp</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="application.hpp" />
+    <ClInclude Include="processing.hpp" />
+    <ClCompile Include="application.cpp"  />
+    <ClCompile Include="main.cpp"  />
+    <ClCompile Include="processing.cpp"  />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:/Temp/moshkina/practice2-opencv-intro/ZERO_CHECK.vcxproj">
+      <Project>8F7F0FD3-A748-4D94-8387-C68EBFB49E2B</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
