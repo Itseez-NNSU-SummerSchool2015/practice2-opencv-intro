@@ -1,6 +1,8 @@
 #include "application.hpp"
 #include "processing.hpp"
 
+#include <sstream>
+
 #include <opencv2/highgui/highgui.hpp>
 
 using namespace cv;
@@ -42,9 +44,12 @@ int Application::drawButtons(Mat &display)
 {
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
+	guiState.saveButtonPlace = Rect(300, display.rows - 60, 120, 40);
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.offButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.saveButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
 
     putText(display, "on", 
@@ -54,6 +59,10 @@ int Application::drawButtons(Mat &display)
     putText(display, "off", 
         Point(guiState.offButtonPlace.x + guiState.offButtonPlace.width / 2 - 20,
               guiState.offButtonPlace.y + guiState.offButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "save", 
+        Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 20,
+              guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
@@ -81,6 +90,18 @@ int Application::showFrame(const std::string &caption,
     Mat dstRoi = display(Rect(src.cols, 0, dst.cols, dst.rows));
     dst.copyTo(dstRoi);       
     
+	if (guiState.saveState)
+	{
+		const time_t timer = time(NULL);
+		tm* aTm = localtime(&timer);
+		std::stringstream ss;
+		ss << aTm->tm_mday<<"_"<< aTm->tm_mon+1<<"_"<<aTm->tm_year+1900<<"_" << aTm->tm_hour<<"_"<< aTm->tm_min<<"_"<< aTm->tm_sec<<".png";
+		string filename = ss.str();
+		imwrite(filename, display);
+		guiState.saveState = false;
+	}
+
+
     drawButtons(display);
     
     namedWindow(caption);  
@@ -109,6 +130,12 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
         elems->state = Application::OffFilter;
         return;
     }
+	if (onButtonClicked(elems->saveButtonPlace, x, y))
+	{
+	  elems->saveState = true;
+	  return;
+	}
+
 }
 
 bool onButtonClicked(cv::Rect buttonPlace, int x, int y)

@@ -1,7 +1,7 @@
 #include "processing.hpp"
 
 #include <opencv2/imgproc/imgproc.hpp>
-#include <time.h>
+
 using namespace cv;
 
 void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
