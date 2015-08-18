@@ -5,8 +5,6 @@
 
 using namespace cv;
 
-bool testfunction() { return true; }
-
 int Application::parseArguments(int argc, const char **argv, 
         Application::Parameters &params)
 {
