@@ -2,13 +2,14 @@
 
 #include <opencv2/imgproc/imgproc.hpp>
 
+
 using namespace cv;
 
-void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
+void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, int t)
 {
     src.copyTo(dst);
 
-    cv::Rect region(src.rows/4, src.cols/4, src.rows/2, src.cols/2);
+    cv::Rect region(src.rows/4 + t / 5, src.cols/4 + t / 5, src.rows/2, src.cols/2);
     Mat roi = dst(region);
 
     const int kSize = 11;
