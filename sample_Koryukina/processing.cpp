@@ -35,9 +35,12 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, FilterType filte
 		}
 		case CANNY:
 		{
-			blur(roi, roi,Size(3,3));
-			//Canny( detected_edges, detected_edges, lowThreshold, lowThreshold
-			//Canny(roi,
+			Mat gray(roi);
+			cvtColor(gray, roi, COLOR_BGR2GRAY);
+			blur(gray, gray, Size(3, 3));
+			Canny(gray, roi, 10, 100, 3);
+			cvtColor(roi, gray, COLOR_GRAY2BGR);
+
 			break;
 		}
 		default:
