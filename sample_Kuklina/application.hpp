@@ -27,6 +27,7 @@ class Application
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
 		cv::Rect saveButtonPlace;
+		cv::Rect cvtColorButtonPlace;
 		bool saveState;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);

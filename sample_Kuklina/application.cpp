@@ -44,11 +44,14 @@ int Application::drawButtons(Mat &display)
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
 	guiState.saveButtonPlace = Rect(300, display.rows - 60, 120, 40);
+	guiState.cvtColorButtonPlace = Rect(440, display.rows - 60, 120, 40);
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.offButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
 	rectangle(display, guiState.saveButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.cvtColorButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
 
     putText(display, "on", 
@@ -62,6 +65,10 @@ int Application::drawButtons(Mat &display)
 	putText(display, "save", 
         Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 30,
               guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "gray", 
+        Point(guiState.cvtColorButtonPlace.x + guiState.cvtColorButtonPlace.width / 2 - 40,
+              guiState.cvtColorButtonPlace.y + guiState.cvtColorButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;

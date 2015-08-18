@@ -18,6 +18,7 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
 
     const int kSize = 11;
     medianBlur(roi, roi, kSize);
+	cvtColor(roi, roi, CV_RGB2GRAY, 0);
 
     rectangle(dst, region, Scalar(255, 0, 0));
 }
