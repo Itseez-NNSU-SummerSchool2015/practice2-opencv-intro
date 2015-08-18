@@ -31,8 +31,11 @@ int Application::getFrame(const std::string &fileName, Mat& src)
 
 int Application::processFrame(const Mat& src, Mat& dst, cv::Rect region)
 {
-    processor.processFrame(src, dst, region);
+    processor.applyEdges = guiState.edgesEnabled;
+    processor.applyPixel = guiState.pixelEnabled;
+    processor.applyGray = guiState.grayEnabled;
 
+    processor.processFrame(src, dst, region);
     if (dst.empty())
     {
         return 1;
