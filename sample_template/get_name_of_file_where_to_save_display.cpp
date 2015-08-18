@@ -1,6 +1,6 @@
-#include "string"
 #include "time.h"
 #include "iostream"
+#include "get_name_of_file_where_to_save_display.hpp"
 
 std::string  get_name_of_file_where_to_save_display(){
 	time_t lt;

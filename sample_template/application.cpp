@@ -1,7 +1,6 @@
 #include "application.hpp"
 #include "processing.hpp"
-#include "string"
-std::string get_name_of_file_where_to_save_display();
+#include "get_name_of_file_where_to_save_display.hpp"
 
 #include <opencv2/highgui/highgui.hpp>
 
@@ -122,10 +121,7 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     }
 	if (onButtonClicked(elems->thirdButtonPlace, x, y))
     {
-		std::string s=get_name_of_file_where_to_save_display();
-		imwrite(s, *tmp);
-		//imwrite("gh_fg_23.png", *tmp);
-		std::cout<<s;
+		imwrite(get_name_of_file_where_to_save_display(), *tmp);
 	    tmp=NULL;
         return;
     }
