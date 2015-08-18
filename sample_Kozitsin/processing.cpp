@@ -83,7 +83,6 @@ void Processing::processFrameCanny(const cv::Mat& src, cv::Mat& dst)
     cv::Rect region(x, y, 100, 100);
     Mat roi = dst(region);
 
-    const int kSize = 11;
     Mat edges;
     Canny(roi, edges, 60, 120);
     vector<Mat> channels(3);

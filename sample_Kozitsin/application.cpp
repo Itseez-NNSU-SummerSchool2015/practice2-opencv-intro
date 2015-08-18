@@ -50,6 +50,18 @@ int Application::processFrameGrey(const Mat& src, Mat& dst)
     return 0;
 }
 
+int Application::processFramePixel(const cv::Mat& src, cv::Mat& dst)
+{
+    processor.processFramePixel(src, dst);
+
+    if (dst.empty())
+    {
+        return 1;
+    }
+
+    return 0;    
+}
+
 int Application::processFrameCanny(const Mat& src, Mat& dst)
 {
     processor.processFrameCanny(src, dst);
@@ -62,6 +74,7 @@ int Application::processFrameCanny(const Mat& src, Mat& dst)
     return 0;
 }
 
+int Application::
 int Application::drawButtons(Mat &display)
 {
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);

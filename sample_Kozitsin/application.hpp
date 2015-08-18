@@ -39,7 +39,8 @@ class Application
     int processFrameMedian(const cv::Mat& src, cv::Mat& dst);
     int processFrameGrey(const cv::Mat& src, cv::Mat& dst);
     int processFrameCanny(const cv::Mat& src, cv::Mat& dst);
-
+    int processFramePixel(const cv::Mat& src, cv::Mat& dst);
+    
     int showFrame(const std::string &caption, 
                   const cv::Mat& src, cv::Mat& dst);
     friend void onButtonsOnOffClick(int eventId, int x, int y, 
