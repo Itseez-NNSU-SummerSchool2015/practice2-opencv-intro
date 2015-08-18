@@ -3,6 +3,7 @@
 
 #include <opencv2/highgui/highgui.hpp>
 #include <time.h>
+#include <string>
 
 using namespace cv;
 
@@ -45,12 +46,18 @@ int Application::drawButtons(Mat &display)
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
 	guiState.saveButtonPlace = Rect(300, display.rows - 60, 120, 40);
 
-    rectangle(display, guiState.onButtonPlace, 
-              Scalar(128, 128, 128), CV_FILLED);
-    rectangle(display, guiState.offButtonPlace, 
-              Scalar(128, 128, 128), CV_FILLED);
-    rectangle(display, guiState.saveButtonPlace, 
-              Scalar(128, 128, 128), CV_FILLED);
+	guiState.filterBlurButtonPlace = Rect(20, display.rows - 120, 120, 40); 
+	guiState.filterCannyButtonPlace = Rect(160, display.rows - 120, 120, 40);
+	guiState.filterPixelizeButtonPlace = Rect(300, display.rows - 120, 120, 40);
+	guiState.filterGrayscaleButtonPlace = Rect(440, display.rows - 120, 120, 40);
+
+    rectangle(display, guiState.onButtonPlace, Scalar(128, 128, 128), CV_FILLED);
+    rectangle(display, guiState.offButtonPlace, Scalar(128, 128, 128), CV_FILLED);
+    rectangle(display, guiState.saveButtonPlace, Scalar(128, 128, 128), CV_FILLED);
+    rectangle(display, guiState.filterBlurButtonPlace, Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.filterCannyButtonPlace, Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.filterPixelizeButtonPlace, Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.filterGrayscaleButtonPlace, Scalar(128, 128, 128), CV_FILLED);
 
     putText(display, "on", 
         Point(guiState.onButtonPlace.x + guiState.onButtonPlace.width / 2 - 15,
@@ -64,12 +71,27 @@ int Application::drawButtons(Mat &display)
         Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 20,
               guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+    putText(display, "Canny", 
+        Point(guiState.filterCannyButtonPlace.x + guiState.filterCannyButtonPlace.width / 2 - 20,
+              guiState.filterCannyButtonPlace.y + guiState.filterCannyButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "Blur", 
+        Point(guiState.filterBlurButtonPlace.x + guiState.filterBlurButtonPlace.width / 2 - 20,
+              guiState.filterBlurButtonPlace.y + guiState.filterBlurButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "Pixelize", 
+        Point(guiState.filterPixelizeButtonPlace.x + guiState.filterPixelizeButtonPlace.width / 2 - 20,
+              guiState.filterPixelizeButtonPlace.y + guiState.filterPixelizeButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "Grayscale", 
+        Point(guiState.filterGrayscaleButtonPlace.x + guiState.filterGrayscaleButtonPlace.width / 2 - 20,
+              guiState.filterGrayscaleButtonPlace.y + guiState.filterGrayscaleButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
 }
 
-int Application::showFrame(const std::string &caption, 
-        const Mat& src, Mat& dst)
+int Application::showFrame(const std::string &caption, const Mat& src, Mat& dst)
 {
     if (guiState.state == OffFilter)
     {
@@ -94,46 +116,56 @@ int Application::showFrame(const std::string &caption,
     
     namedWindow(caption);  
     imshow(caption, display);
-    setMouseCallback(caption, onButtonsOnOffClick, &guiState);
 
-	butonSaveClickHandleArgs.dstBuf = &dst;
+	butonClickHandleArgs.dstBuf = &dst;
+	setMouseCallback(caption, onButtonClick, this);
 
-	setMouseCallback(caption, onButtonSaveClick, this);
     char key = waitKey(1);
 
     return key;
 }
 
-void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
-{
-    if (eventId != EVENT_LBUTTONDOWN)
-    {
-        return;
-    }
-    Application::GUIElementsState *elems = 
-        (Application::GUIElementsState *)userData;
-    if (onButtonClicked(elems->onButtonPlace, x, y))
-    {
-        elems->state = Application::OnFilter;
-        return;
-    }
-    if (onButtonClicked(elems->offButtonPlace, x, y))
-    {
-        elems->state = Application::OffFilter;
-        return;
-    }
-}
-
-void onButtonSaveClick(int eventId, int x, int y, int flsgs, void *userData) 
+void onButtonClick(int eventId, int x, int y, int flsgs, void *userData) 
 {
 	if (eventId != EVENT_LBUTTONDOWN) 
 	{
 		return;
 	}
 	Application* app = static_cast<Application*>(userData);
+	
+	if (onButtonClicked(app->guiState.onButtonPlace, x, y))
+    {
+        app->guiState.state = Application::OnFilter;
+        return;
+    }
+    if (onButtonClicked(app->guiState.offButtonPlace, x, y))
+    {
+        app->guiState.state = Application::OffFilter;
+        return;
+    }
 	if (onButtonClicked(app->guiState.saveButtonPlace, x, y)) 
 	{
-		imwrite(std::to_string((long long)clock()) + ".png", *app->butonSaveClickHandleArgs.dstBuf);
+		imwrite(std::to_string((long long)clock()) + ".png", *app->butonClickHandleArgs.dstBuf);
+		return;
+	}
+	if (onButtonClicked(app->guiState.filterBlurButtonPlace, x, y)) 
+	{
+		app->processor.setFilterType(FilterType::Blur);
+		return;
+	}
+	if (onButtonClicked(app->guiState.filterCannyButtonPlace, x, y)) 
+	{
+		app->processor.setFilterType(FilterType::Canny);
+		return;
+	}
+	if (onButtonClicked(app->guiState.filterGrayscaleButtonPlace, x, y)) 
+	{
+		app->processor.setFilterType(FilterType::Grayscale);
+		return;
+	}
+	if (onButtonClicked(app->guiState.filterPixelizeButtonPlace, x, y)) 
+	{
+		app->processor.setFilterType(FilterType::Pixelize);
 		return;
 	}
 }

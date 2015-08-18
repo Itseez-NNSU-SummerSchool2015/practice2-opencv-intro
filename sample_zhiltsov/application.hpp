@@ -27,28 +27,31 @@ class Application
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
 		cv::Rect saveButtonPlace;
+		cv::Rect filterGrayscaleButtonPlace;
+		cv::Rect filterPixelizeButtonPlace;
+		cv::Rect filterCannyButtonPlace;
+		cv::Rect filterBlurButtonPlace;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
     int processFrame(const cv::Mat& src, cv::Mat& dst);
     int showFrame(const std::string &caption, 
                   const cv::Mat& src, cv::Mat& dst);
-    friend void onButtonsOnOffClick(int eventId, int x, int y, 
-                                    int flags, void *userData);
-	friend void onButtonSaveClick(int eventId, int x, int y, 
-									int flags, void *userData);
+	friend void onButtonClick(int eventId, int x, int y, int flags, void *userData);
     Application() 
     { 
         guiState.state = OnFilter;
+		processor.setFilterType(FilterType::Blur);
     };
 
  private:
     Processing processor;
     GUIElementsState guiState;
-	struct ButonSaveClickHandleArgs {
+	struct ButonClickHandleArgs 
+	{
 		cv::Mat* dstBuf;
 	};
-	ButonSaveClickHandleArgs butonSaveClickHandleArgs;
+	ButonClickHandleArgs butonClickHandleArgs;
 
     int drawButtons(cv::Mat &display);
     
