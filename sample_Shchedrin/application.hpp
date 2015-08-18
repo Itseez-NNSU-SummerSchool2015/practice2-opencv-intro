@@ -31,7 +31,7 @@ class Application
     int getFrame(const std::string &fileName, cv::Mat& src);
     int processFrame(const cv::Mat& src, cv::Mat& dst, cv::Rect region);
     int showFrame(const std::string &caption, 
-                  const cv::Mat& src, cv::Mat& dst);
+                  const cv::Mat& src, cv::Mat& dst, int shift);
     friend void onButtonsOnOffClick(int eventId, int x, int y, 
                                     int flags, void *userData);
     Application() 

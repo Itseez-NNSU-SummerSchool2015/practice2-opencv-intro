@@ -36,8 +36,10 @@ int main(int argc, const char **argv)
     char key = 0;
     Mat dst(src.rows, src.cols, src.type());
     while (key != 27) // Esc
-    {
-        key = app.showFrame(caption, src, dst);
+    {   
+        static int shift = 0;
+        shift++;
+        key = app.showFrame(caption, src, dst, shift);
     }
 
 	return OK;

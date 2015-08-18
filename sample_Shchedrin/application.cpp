@@ -60,7 +60,7 @@ int Application::drawButtons(Mat &display)
 }
 
 int Application::showFrame(const std::string &caption, 
-        const Mat& src, Mat& dst)
+        const Mat& src, Mat& dst, int shift)
 {
     if (guiState.state == OffFilter)
     {
@@ -68,7 +68,7 @@ int Application::showFrame(const std::string &caption,
     }
     else if (guiState.state == OnFilter)
     {
-        cv::Rect region(src.rows/4, src.cols/4, src.rows/2, src.cols/2);
+        cv::Rect region(shift % (src.cols/2), src.cols/4, src.rows/2, src.cols/2);
         processFrame(src, dst, region);
     }
     else
