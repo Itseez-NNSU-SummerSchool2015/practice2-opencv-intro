@@ -116,6 +116,11 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
         elems->state = Application::OffFilter;
         return;
     }
+	if (onButtonClicked(elems->thirdButtonPlace, x, y))
+    {
+		for(;;){}
+        return;
+    }
 }
 
 bool onButtonClicked(cv::Rect buttonPlace, int x, int y)
