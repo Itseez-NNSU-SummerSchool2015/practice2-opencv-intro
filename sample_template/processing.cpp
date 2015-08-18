@@ -4,11 +4,11 @@
 
 using namespace cv;
 
-void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
+void Processing::processFrame(const cv::Mat& src, cv::Mat& dst,int a,int b)
 {
     src.copyTo(dst);
 
-    cv::Rect region(src.rows/4, src.cols/4, 3*src.rows/4, 3*src.cols/4);
+    cv::Rect region(0, 0, a, b);
     Mat roi = dst(region);
 
     const int kSize = 11;

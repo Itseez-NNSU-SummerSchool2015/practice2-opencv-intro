@@ -37,7 +37,7 @@ int main(int argc, const char **argv)
     Mat dst(src.rows, src.cols, src.type());
     while (key != 27) // Esc
     {
-        key = app.showFrame(caption, src, dst);
+        key = app.showFrame(caption, src, dst, 100, 100);
     }
 
 	return OK;

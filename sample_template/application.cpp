@@ -26,9 +26,9 @@ int Application::getFrame(const std::string &fileName, Mat& src)
     return 0;
 }
 
-int Application::processFrame(const Mat& src, Mat& dst)
+int Application::processFrame(const Mat& src, Mat& dst, int a, int b)
 {
-    processor.processFrame(src, dst);
+    processor.processFrame(src, dst, a, b);
 
     if (dst.empty())
     {
@@ -60,7 +60,7 @@ int Application::drawButtons(Mat &display)
 }
 
 int Application::showFrame(const std::string &caption, 
-        const Mat& src, Mat& dst)
+        const Mat& src, Mat& dst, int a, int b)
 {
     if (guiState.state == OffFilter)
     {
@@ -68,7 +68,7 @@ int Application::showFrame(const std::string &caption,
     }
     else if (guiState.state == OnFilter)
     {
-        processFrame(src, dst);
+        processFrame(src, dst, a, b);
     }
     else
     {

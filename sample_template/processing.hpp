@@ -5,5 +5,5 @@
 class Processing
 {
  public:
-    void processFrame(const cv::Mat& src, cv::Mat& dst);
+    void processFrame(const cv::Mat& src, cv::Mat& dst, int a, int b);
 };
