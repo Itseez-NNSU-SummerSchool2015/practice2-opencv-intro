@@ -30,7 +30,7 @@ int Application::getFrame(const std::string &fileName, Mat& src)
 
 int Application::processFrame(const Mat& src, Mat& dst)
 {
-    processor.processFrame(src, dst);
+    processor.processFrame(src, dst, guiState.filter);
 
     if (dst.empty())
     {
@@ -42,27 +42,48 @@ int Application::processFrame(const Mat& src, Mat& dst)
 
 int Application::drawButtons(Mat &display)
 {
-    guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
-    guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
-	guiState.saveButtonPlace = Rect(300, display.rows - 60, 120, 40);
-    rectangle(display, guiState.onButtonPlace, 
-              Scalar(128, 128, 128), CV_FILLED);
+    guiState.offButtonPlace = Rect(20, display.rows - 60, 120, 40);
+    guiState.saveButtonPlace = Rect(180, display.rows - 60, 120, 40);
+	guiState.medianButtonPlace = Rect(340, display.rows - 60, 120, 40);
+	guiState.grayButtonPlace = Rect(500, display.rows - 60, 120, 40);
+	guiState.pixelButtonPlace = Rect(660, display.rows - 60, 120, 40);
+	guiState.cannyButtonPlace = Rect(820, display.rows - 60, 120, 40);
     rectangle(display, guiState.offButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
-	rectangle(display, guiState.saveButtonPlace, 
+    rectangle(display, guiState.saveButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.medianButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.grayButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.pixelButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.cannyButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
 
-    putText(display, "on", 
-        Point(guiState.onButtonPlace.x + guiState.onButtonPlace.width / 2 - 15,
-              guiState.onButtonPlace.y + guiState.onButtonPlace.height / 2 + 10),
-        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
     putText(display, "off", 
-        Point(guiState.offButtonPlace.x + guiState.offButtonPlace.width / 2 - 20,
+        Point(guiState.offButtonPlace.x + guiState.offButtonPlace.width / 2 - 40,
               guiState.offButtonPlace.y + guiState.offButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
-	putText(display, "save", 
-        Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 20,
+    putText(display, "save", 
+        Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 40,
               guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "median", 
+        Point(guiState.medianButtonPlace.x + guiState.medianButtonPlace.width / 2 - 40,
+              guiState.medianButtonPlace.y + guiState.medianButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "gray", 
+        Point(guiState.grayButtonPlace.x + guiState.grayButtonPlace.width / 2 - 40,
+              guiState.grayButtonPlace.y + guiState.grayButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "pixel", 
+        Point(guiState.pixelButtonPlace.x + guiState.pixelButtonPlace.width / 2 - 40,
+              guiState.pixelButtonPlace.y + guiState.pixelButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "canny", 
+        Point(guiState.cannyButtonPlace.x + guiState.cannyButtonPlace.width / 2 - 40,
+              guiState.cannyButtonPlace.y + guiState.cannyButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
@@ -120,11 +141,6 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     }
     Application::GUIElementsState *elems = 
         (Application::GUIElementsState *)userData;
-    if (onButtonClicked(elems->onButtonPlace, x, y))
-    {
-        elems->state = Application::OnFilter;
-        return;
-    }
     if (onButtonClicked(elems->offButtonPlace, x, y))
     {
         elems->state = Application::OffFilter;
@@ -135,6 +151,30 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
 	  elems->saveState = true;
 	  return;
 	}
+	if (onButtonClicked(elems->medianButtonPlace, x, y))
+    {
+        elems->state = Application::OnFilter;
+		elems->filter=Processing::MEDIAN;
+        return;
+    }
+	if (onButtonClicked(elems->grayButtonPlace, x, y))
+    {
+        elems->state = Application::OnFilter;
+		elems->filter=Processing::CVT_CONVERT_GRAY;
+        return;
+    }
+	if (onButtonClicked(elems->pixelButtonPlace, x, y))
+    {
+        elems->state = Application::OnFilter;
+		elems->filter=Processing::PIXELIZED;
+        return;
+    }
+	if (onButtonClicked(elems->cannyButtonPlace, x, y))
+    {
+        elems->state = Application::OnFilter;
+		elems->filter=Processing::CANNY;
+        return;
+    }
 
 }
 
