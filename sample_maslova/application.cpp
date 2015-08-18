@@ -28,7 +28,7 @@ int Application::getFrame(const std::string &fileName, Mat& src)
 
 int Application::processFrame(const Mat& src, Mat& dst)
 {
-    processor.processFrame(src, dst);
+	processor.processFrame(src, dst, Processing::PIXELIZED);
 
     if (dst.empty())
     {
