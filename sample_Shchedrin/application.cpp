@@ -16,6 +16,10 @@ int Application::parseArguments(int argc, const char **argv,
         return 1;
     }
     params.imgFileName = std::string(argv[1]);
+    params.useCamera = false;
+    if(std::string(argv[1]) == "--camera"){
+        params.useCamera = true;
+    }
     return 0;
 }
 

@@ -20,6 +20,7 @@ class Application
     struct Parameters
     {
         std::string imgFileName;
+        bool useCamera;
     };
     struct GUIElementsState
     {

@@ -1,4 +1,5 @@
 #include <opencv2/core/core.hpp>
+#include "opencv2/opencv.hpp"
 #include <iostream>
 
 #include "application.hpp"
@@ -26,7 +27,12 @@ int main(int argc, const char **argv)
     }
 
     Mat src;
-    if (app.getFrame(params.imgFileName, src) != 0)
+    VideoCapture cap(0);
+    if(!cap.isOpened())  // check if we succeeded
+        return -1;
+    cout<<"Cam opened"<<endl;
+    
+    if (!params.useCamera && app.getFrame(params.imgFileName, src) != 0)
     {
         cout << "Error: \'src\' image is null or empty!" << endl;
         return WRONG_INPUT;
@@ -39,6 +45,11 @@ int main(int argc, const char **argv)
     {   
         static int shift = 0;
         shift++;
+        if (params.useCamera){
+            cout<<"getting frame"<<endl;
+            cap>>src;
+            cout<<"ok"<<endl;
+        }
         key = app.showFrame(caption, src, dst, shift);
     }
 
