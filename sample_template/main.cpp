@@ -39,6 +39,6 @@ int main(int argc, const char **argv)
     {
         key = app.showFrame(caption, src, dst);
     }
-
+	system("pause");
 	return OK;
 }
