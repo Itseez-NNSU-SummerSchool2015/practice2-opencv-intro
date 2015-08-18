@@ -59,6 +59,8 @@ int Application::drawButtons(Mat &display)
     return 0;
 }
 
+
+
 int Application::showFrame(const std::string &caption, 
         const Mat& src, Mat& dst)
 {
