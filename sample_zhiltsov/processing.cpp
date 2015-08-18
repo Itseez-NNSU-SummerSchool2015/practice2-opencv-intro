@@ -3,7 +3,6 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <time.h>
 #include <iostream>
-#include <string>
 
 using namespace cv;
 
