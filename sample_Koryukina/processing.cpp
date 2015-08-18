@@ -23,8 +23,9 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, FilterType filte
 		}
 		case CVT_CONVERT_GRAY:
 		{
-			cvtColor(roi, roi, COLOR_BGR2GRAY);
-			//GaussianBlur (roi,roi, Size(7,7));
+			Mat gray(roi);
+			cvtColor(gray, roi, COLOR_BGR2GRAY);
+			cvtColor(roi, gray, COLOR_GRAY2BGR);
 			break;
 		}
 		case PIXELIZED:
