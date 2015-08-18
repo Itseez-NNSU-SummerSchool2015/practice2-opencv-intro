@@ -55,7 +55,7 @@ int Application::drawButtons(Mat &display)
         Point(guiState.onButtonPlace.x + guiState.onButtonPlace.width / 2 - 15,
               guiState.onButtonPlace.y + guiState.onButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
-    
+
     putText(display, "off", 
         Point(guiState.offButtonPlace.x + guiState.offButtonPlace.width / 2 - 20,
               guiState.offButtonPlace.y + guiState.offButtonPlace.height / 2 + 10),
@@ -80,6 +80,11 @@ int Application::showFrame(const std::string &caption,
     {
         processFrame(src, dst);
     }
+    else if (guiState.state == Saving)
+    {
+        isSaveEnabled = true;
+        guiState.state = OnFilter;
+    }
     else
     {
         return 1;
@@ -91,6 +96,12 @@ int Application::showFrame(const std::string &caption,
     Mat dstRoi = display(Rect(src.cols, 0, dst.cols, dst.rows));
     dst.copyTo(dstRoi);       
     
+    if (isSaveEnabled)
+    {
+        imwrite("saving.png", display);
+        isSaveEnabled = false;
+    }
+
     drawButtons(display);
     
     namedWindow(caption);  
@@ -117,6 +128,11 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     if (onButtonClicked(elems->offButtonPlace, x, y))
     {
         elems->state = Application::OffFilter;
+        return;
+    }
+    if (onButtonClicked(elems->saveButtonPlace, x, y))
+    {
+        elems->state = Application::Saving;
         return;
     }
 }

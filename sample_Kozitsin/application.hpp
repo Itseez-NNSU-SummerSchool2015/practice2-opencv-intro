@@ -15,7 +15,8 @@ class Application
     enum WindowState
     {
         OnFilter,
-        OffFilter
+        OffFilter,
+        Saving
     };
     struct Parameters
     {
@@ -38,12 +39,14 @@ class Application
     Application() 
     { 
         guiState.state = OnFilter;
+        isSaveEnabled = false;
     };
 
  private:
     Processing processor;
     GUIElementsState guiState;
 
+    bool isSaveEnabled;
     int drawButtons(cv::Mat &display);
     
     friend bool onButtonClicked(cv::Rect buttonPlace, int x, int y);
