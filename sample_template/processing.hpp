@@ -13,4 +13,6 @@ class Processing
 		CANNY
 	};
     void processFrame(const cv::Mat& src, cv::Mat& dst, int t, FilterType filter);
+	void pixelize(const cv::Mat& src, cv::Mat& dst);
+	
 };
