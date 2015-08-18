@@ -24,10 +24,16 @@ class Application
     struct GUIElementsState
     {
         bool saveImage;
+        bool grayEnabled;
+        bool pixelEnabled;
+        bool edgesEnabled;
         WindowState state;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
         cv::Rect saveButtonPlace;
+        cv::Rect grayscaleButtonPlace;
+        cv::Rect pixelButtonPlace;
+        cv::Rect edgesButtonPlace;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
@@ -40,6 +46,9 @@ class Application
     { 
         guiState.state = OnFilter;
         guiState.saveImage = false;
+        guiState.grayEnabled = false;
+        guiState.pixelEnabled = false;
+        guiState.edgesEnabled = false;
     };
 
  private:
