@@ -16,7 +16,8 @@ class Application
     {
         OnFilter,
         OffFilter,
-		savePic
+		savePic,
+		grayFilter
     };
     struct Parameters
     {
@@ -26,9 +27,14 @@ class Application
     {
         WindowState state;
 		bool saveState;
+		FilterType filter;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
 		cv::Rect saveButtonPlace;
+		cv::Rect grayButtonPlace;
+		cv::Rect cannyButtonPlace;
+		cv::Rect rpixelButtonPlace;
+		cv::Rect spixelButtonPlace;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
@@ -41,6 +47,7 @@ class Application
     { 
         guiState.state = OnFilter;
 		guiState.saveState=false;
+		guiState.filter = MEDIAN;
     };
 
  private:

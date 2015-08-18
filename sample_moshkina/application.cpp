@@ -29,7 +29,7 @@ int Application::getFrame(const std::string &fileName, Mat& src)
 
 int Application::processFrame(const Mat& src, Mat& dst)
 {
-    processor.processFrame(src, dst);
+	processor.processFrame(src, dst, guiState.filter);
 
     if (dst.empty())
     {
@@ -44,6 +44,10 @@ int Application::drawButtons(Mat &display)
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
 	guiState.saveButtonPlace = Rect(300, display.rows - 60, 120, 40);
+	guiState.grayButtonPlace = Rect(440, display.rows - 60, 120, 40);
+	guiState.cannyButtonPlace = Rect(580, display.rows - 60, 120, 40);
+	guiState.rpixelButtonPlace = Rect(720, display.rows - 60, 120, 40);
+	guiState.spixelButtonPlace = Rect(860, display.rows - 60, 120, 40);
 
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
@@ -51,9 +55,17 @@ int Application::drawButtons(Mat &display)
               Scalar(128, 128, 128), CV_FILLED);
 	rectangle(display, guiState.saveButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.grayButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.cannyButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.rpixelButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.spixelButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
 
-    putText(display, "on", 
-        Point(guiState.onButtonPlace.x + guiState.onButtonPlace.width / 2 - 15,
+    putText(display, "median", 
+        Point(guiState.onButtonPlace.x + guiState.onButtonPlace.width / 2 - 50,
               guiState.onButtonPlace.y + guiState.onButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
     putText(display, "off", 
@@ -64,6 +76,22 @@ int Application::drawButtons(Mat &display)
         Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 35,
               guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "gray", 
+        Point(guiState.grayButtonPlace.x + guiState.grayButtonPlace.width / 2 - 35,
+              guiState.grayButtonPlace.y + guiState.grayButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "canny", 
+        Point(guiState.cannyButtonPlace.x + guiState.cannyButtonPlace.width / 2 - 35,
+              guiState.cannyButtonPlace.y + guiState.cannyButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "r_pixel", 
+		Point(guiState.rpixelButtonPlace.x + guiState.rpixelButtonPlace.width / 2 - 50,
+		guiState.rpixelButtonPlace.y + guiState.rpixelButtonPlace.height / 2 + 10),
+		FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "s_pixel", 
+		Point(guiState.spixelButtonPlace.x + guiState.spixelButtonPlace.width / 2 - 50,
+		guiState.spixelButtonPlace.y + guiState.spixelButtonPlace.height / 2 + 10),
+		FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
 }
@@ -71,20 +99,15 @@ int Application::drawButtons(Mat &display)
 int Application::showFrame(const std::string &caption, 
         const Mat& src, Mat& dst)
 {
-	int flag=0;
+	
     if (guiState.state == OffFilter)
     {
         src.copyTo(dst);
     }
     else if (guiState.state == OnFilter)
     {
-        processFrame(src, dst);
-    }
-	/*else if (guiState.state == savePic) 
-	{
 		processFrame(src, dst);
-		flag = 1;
-	}*/
+    }
     else
     {
         return 1;
@@ -104,9 +127,12 @@ int Application::showFrame(const std::string &caption,
 		timeinfo = localtime(&rawtime);
 
 		string name = "result-moshkina-";
-		name = name + std::to_string(rawtime);
+		//name = name + std::to_string(rawtime);
+		std::ostringstream oss;
+		oss << rawtime;
+		string str = oss.str();
 
-		imwrite(name+".jpg", display);
+		imwrite(name+str+".jpg", display);
 		guiState.saveState=false;
 	}
     drawButtons(display);
@@ -130,7 +156,8 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     if (onButtonClicked(elems->onButtonPlace, x, y))
     {
         elems->state = Application::OnFilter;
-        return;
+		elems->filter = MEDIAN;
+		return;
     }
     if (onButtonClicked(elems->offButtonPlace, x, y))
     {
@@ -139,7 +166,32 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     }
 	if (onButtonClicked(elems->saveButtonPlace, x, y))
     {
+		elems->state = Application::OnFilter;
         elems->saveState = true;
+        return;
+    }
+	if (onButtonClicked(elems->grayButtonPlace, x, y))
+    {
+		elems->state = Application::OnFilter;
+        elems->filter = CVT_CONVERT_GRAY;
+        return;
+    }
+	if (onButtonClicked(elems->cannyButtonPlace, x, y))
+    {
+		elems->state = Application::OnFilter;
+        elems->filter = CANNY;
+        return;
+    }
+	if (onButtonClicked(elems->rpixelButtonPlace, x, y))
+    {
+		elems->state = Application::OnFilter;
+        elems->filter = PIXELIZED_ROUND;
+        return;
+    }
+	if (onButtonClicked(elems->spixelButtonPlace, x, y))
+    {
+		elems->state = Application::OnFilter;
+        elems->filter = PIXELIZED_SQUARE;
         return;
     }
 }
