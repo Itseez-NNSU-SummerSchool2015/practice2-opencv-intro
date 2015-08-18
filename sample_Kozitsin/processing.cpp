@@ -18,8 +18,8 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
 
     while (x > 400 || y > 400)
     {
-    	x = rand() % src.rows - 1;
-    	y = rand() % src.cols - 1;
+    	x = rand() % src.rows;
+    	y = rand() % src.cols;
     }
 
     cv::Rect region(x, y, 100, 100);
