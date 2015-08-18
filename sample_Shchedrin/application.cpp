@@ -88,7 +88,10 @@ int Application::showFrame(const std::string &caption,
     src.copyTo(srcRoi);
     Mat dstRoi = display(Rect(src.cols, 0, dst.cols, dst.rows));
     dst.copyTo(dstRoi);       
-    
+    if(guiState.saveImage){
+        guiState.saveImage = false;
+        imwrite("processed_image.png",display);
+    }
     drawButtons(display);
     
     namedWindow(caption);  
@@ -115,6 +118,11 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     if (onButtonClicked(elems->offButtonPlace, x, y))
     {
         elems->state = Application::OffFilter;
+        return;
+    }
+    if (onButtonClicked(elems->saveButtonPlace, x, y))
+    {
+        elems->saveImage = true;
         return;
     }
 }

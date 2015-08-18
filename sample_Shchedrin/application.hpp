@@ -23,6 +23,7 @@ class Application
     };
     struct GUIElementsState
     {
+        bool saveImage;
         WindowState state;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
@@ -38,6 +39,7 @@ class Application
     Application() 
     { 
         guiState.state = OnFilter;
+        guiState.saveImage = false;
     };
 
  private:
