@@ -74,7 +74,6 @@ int Application::processFrameCanny(const Mat& src, Mat& dst)
     return 0;
 }
 
-int Application::
 int Application::drawButtons(Mat &display)
 {
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
@@ -84,6 +83,7 @@ int Application::drawButtons(Mat &display)
 
     guiState.greyOnButtonPlace = Rect(20, display.rows - 120, 120, 40);
     guiState.cannyButtonPlace = Rect(160, display.rows - 120, 120, 40);
+    guiState.pixelButtonPlace = Rect(300, display.rows - 120, 120, 40);
 
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
@@ -95,6 +95,8 @@ int Application::drawButtons(Mat &display)
     rectangle(display, guiState.greyOnButtonPlace,
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.cannyButtonPlace,
+              Scalar(128, 128, 128), CV_FILLED);
+    rectangle(display, guiState.pixelButtonPlace,
               Scalar(128, 128, 128), CV_FILLED);
 
     putText(display, "median", 
@@ -120,8 +122,12 @@ int Application::drawButtons(Mat &display)
     putText(display, "canny",
         Point(guiState.cannyButtonPlace.x + guiState.cannyButtonPlace.width / 2 - 25,
               guiState.cannyButtonPlace.y + guiState.cannyButtonPlace.height / 2 + 10),
-        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);        
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);    
 
+    putText(display, "pixel",
+        Point(guiState.pixelButtonPlace.x + guiState.pixelButtonPlace.width / 2 - 25,
+              guiState.pixelButtonPlace.y + guiState.pixelButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);         
     return 0;
 }
 
@@ -143,6 +149,10 @@ int Application::showFrame(const std::string &caption,
     else if (guiState.state == Canny)
     {
         processFrameCanny(src, dst);
+    }
+    else if (guiState.state == Pixel)
+    {
+        processFramePixel(src, dst);
     }
     else if (guiState.state == Saving)
     {
@@ -206,7 +216,11 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
         elems->state = Application::Canny;
         return;
     }
-
+    if (onButtonClicked(elems->pixelButtonPlace, x, y))
+    {
+        elems->state = Application::Pixel;
+        return;
+    }
     if (onButtonClicked(elems->saveButtonPlace, x, y))
     {
         elems->state = Application::Saving;

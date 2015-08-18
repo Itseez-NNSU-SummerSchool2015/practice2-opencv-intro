@@ -18,7 +18,8 @@ class Application
         OffFilter,
         Saving,
         OnGrey,
-        Canny
+        Canny,
+        Pixel
     };
     struct Parameters
     {
@@ -32,6 +33,7 @@ class Application
         cv::Rect saveButtonPlace;
         cv::Rect greyOnButtonPlace;
         cv::Rect cannyButtonPlace;
+        cv::Rect pixelButtonPlace;
     };
 
     int parseArguments(int argc, const char **argv, Parameters &params);
@@ -40,7 +42,7 @@ class Application
     int processFrameGrey(const cv::Mat& src, cv::Mat& dst);
     int processFrameCanny(const cv::Mat& src, cv::Mat& dst);
     int processFramePixel(const cv::Mat& src, cv::Mat& dst);
-    
+
     int showFrame(const std::string &caption, 
                   const cv::Mat& src, cv::Mat& dst);
     friend void onButtonsOnOffClick(int eventId, int x, int y, 
