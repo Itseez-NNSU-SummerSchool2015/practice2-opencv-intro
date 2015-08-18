@@ -27,6 +27,14 @@ class Application
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
 		cv::Rect newButtom;
+
+		cv::Rect FilterMEDIAN;
+		cv::Rect FilterCVT_CONVERT_GRAY;
+		cv::Rect FilterPIXELIZED;
+		cv::Rect FilterCANNY;
+
+		Processing::FilterType filter;
+
 		bool save;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
@@ -40,6 +48,9 @@ class Application
     { 
         guiState.state = OnFilter;
 		guiState.save = false;
+
+		guiState.filter =  Processing::MEDIAN;
+
     };
 
  private:
