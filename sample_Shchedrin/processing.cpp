@@ -22,7 +22,13 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, cv::Rect region)
         merge(rgb, roi);        
     }
     if(applyPixel){
-
+        int pixelSize = 10;
+        for(int i = 0; pixelSize * i < roi.rows; i++){
+            for(int j = 0; pixelSize * j < roi.cols; j++){
+                Rect square(j*pixelSize, i* pixelSize, pixelSize, pixelSize);
+                roi(square).setTo(mean(roi(square)));
+            }
+        }
     }
     if(applyGray){
         Mat buf;
