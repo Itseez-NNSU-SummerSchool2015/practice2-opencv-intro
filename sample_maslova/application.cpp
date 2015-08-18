@@ -28,7 +28,7 @@ int Application::getFrame(const std::string &fileName, Mat& src)
 
 int Application::processFrame(const Mat& src, Mat& dst)
 {
-	processor.processFrame(src, dst, Processing::PIXELIZED);
+	processor.processFrame(src, dst, guiState.filter);
 
     if (dst.empty())
     {
@@ -43,11 +43,23 @@ int Application::drawButtons(Mat &display)
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
 	guiState.saveButtonPlace = Rect(300, display.rows - 60, 120, 40);
+	guiState.medianButtonPlace = Rect(440, display.rows - 60, 120, 40);
+	guiState.grayButtonPlace = Rect(580, display.rows - 60, 120, 40);
+	guiState.pixelButtonPlace = Rect(720, display.rows - 60, 120, 40);
+	guiState.cannyButtonPlace = Rect(860, display.rows - 60, 120, 40);
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.offButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
 	rectangle(display, guiState.saveButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.medianButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.grayButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.pixelButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.cannyButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
 
     putText(display, "on", 
@@ -61,6 +73,18 @@ int Application::drawButtons(Mat &display)
 	putText(display, "save", 
         Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 20,
               guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "median", 
+		Point(guiState.medianButtonPlace.x + guiState.medianButtonPlace.width / 2 - 20,
+		guiState.medianButtonPlace.y + guiState.medianButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "gray", 
+		Point(guiState.grayButtonPlace.x + guiState.grayButtonPlace.width / 2 - 20,
+		guiState.grayButtonPlace.y + guiState.grayButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "pixelized", 
+		Point(guiState.pixelButtonPlace.x + guiState.pixelButtonPlace.width / 2 - 20,
+		guiState.pixelButtonPlace.y + guiState.pixelButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
