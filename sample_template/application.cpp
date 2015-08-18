@@ -34,7 +34,7 @@ int Application::processFrame(const Mat& src, Mat& dst)
     {
         return 1;
     }
-
+	Sleep(500);
     return 0;
 }
 
@@ -42,10 +42,13 @@ int Application::drawButtons(Mat &display)
 {
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
+	guiState.saveButtonPlace = Rect(300, display.rows - 60, 120, 40);
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.offButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.saveButtonPlace,
+			  Scalar(128, 128, 128), CV_FILLED);
 
     putText(display, "on", 
         Point(guiState.onButtonPlace.x + guiState.onButtonPlace.width / 2 - 15,
@@ -55,6 +58,10 @@ int Application::drawButtons(Mat &display)
         Point(guiState.offButtonPlace.x + guiState.offButtonPlace.width / 2 - 20,
               guiState.offButtonPlace.y + guiState.offButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "save",
+		Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 35,
+			  guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
+		FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
 }
@@ -81,13 +88,24 @@ int Application::showFrame(const std::string &caption,
     Mat dstRoi = display(Rect(src.cols, 0, dst.cols, dst.rows));
     dst.copyTo(dstRoi);       
     
+	if (guiState.saveState)
+	{
+		int t1=clock();
+		char* time="";
+		itoa(t1,time,10);
+		char* image="image ";
+		strcpy(image, time);
+		imwrite(image, display);
+		guiState.saveState=false;
+	}
+
     drawButtons(display);
     
     namedWindow(caption);  
     imshow(caption, display);
     setMouseCallback(caption, onButtonsOnOffClick, &guiState);
     char key = waitKey(1);
-
+	
     return key;
 }
 
@@ -99,6 +117,7 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     }
     Application::GUIElementsState *elems = 
         (Application::GUIElementsState *)userData;
+	elems->saveState=false;
     if (onButtonClicked(elems->onButtonPlace, x, y))
     {
         elems->state = Application::OnFilter;
@@ -109,6 +128,11 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
         elems->state = Application::OffFilter;
         return;
     }
+	if (onButtonClicked(elems->saveButtonPlace, x, y))
+	{
+		elems->saveState = true;
+		return;
+	}
 }
 
 bool onButtonClicked(cv::Rect buttonPlace, int x, int y)

@@ -2,6 +2,8 @@
 
 #include <string>
 #include <iostream>
+#include <Windows.h>
+#include <ctime>
 #include <opencv2/core/core.hpp>
 
 #include "processing.hpp"
@@ -26,6 +28,8 @@ class Application
         WindowState state;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
+		cv::Rect saveButtonPlace;
+		bool saveState;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
