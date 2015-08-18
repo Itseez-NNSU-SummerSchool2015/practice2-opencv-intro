@@ -28,8 +28,10 @@ int main(int argc, const char **argv)
 
     Mat src;
     VideoCapture cap(0);
-    if(!cap.isOpened())  // check if we succeeded
+    if(!cap.isOpened()){  // check if we succeeded
+        cerr<<"Can not connect to camera."<<endl;
         return -1;
+    }
     cout<<"Cam opened"<<endl;
     
     if (!params.useCamera && app.getFrame(params.imgFileName, src) != 0)
@@ -45,12 +47,14 @@ int main(int argc, const char **argv)
     {   
         static int shift = 0;
         shift++;
-        if (params.useCamera){
-            cout<<"getting frame"<<endl;
-            cap>>src;
-            cout<<"ok"<<endl;
+        cap>>src;
+        if(src.empty()){
+                cout<<"Unable to get frame"<<endl;
+                continue;
         }
+        
         key = app.showFrame(caption, src, dst, shift);
+        //key = waitKey(1);
     }
 
 	return OK;
