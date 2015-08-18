@@ -1,14 +1,16 @@
 #include "processing.hpp"
 
 #include <opencv2/imgproc/imgproc.hpp>
-
+#include <time.h>
 using namespace cv;
 
 void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
 {
     src.copyTo(dst);
-
-    cv::Rect region(src.rows/4, src.cols/4, src.rows/2, src.cols/2);
+	RNG rng;
+	rng.state = time(NULL);
+	cv::Rect region(rng.uniform(0, src.rows/2), rng.uniform(0,src.cols/2), src.rows/2, src.cols/2);
+	
     Mat roi = dst(region);
 
     const int kSize = 11;
