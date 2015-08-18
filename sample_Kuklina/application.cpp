@@ -1,5 +1,6 @@
 #include "application.hpp"
 #include "processing.hpp"
+#include <time.h>
 
 #include <opencv2/highgui/highgui.hpp>
 
@@ -42,9 +43,12 @@ int Application::drawButtons(Mat &display)
 {
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
+	guiState.saveButtonPlace = Rect(300, display.rows - 60, 120, 40);
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.offButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.saveButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
 
     putText(display, "on", 
@@ -55,6 +59,10 @@ int Application::drawButtons(Mat &display)
         Point(guiState.offButtonPlace.x + guiState.offButtonPlace.width / 2 - 20,
               guiState.offButtonPlace.y + guiState.offButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+	putText(display, "save", 
+        Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 30,
+              guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
 }
@@ -62,6 +70,8 @@ int Application::drawButtons(Mat &display)
 int Application::showFrame(const std::string &caption, 
         const Mat& src, Mat& dst)
 {
+	time_t name_time = time(NULL);
+
     if (guiState.state == OffFilter)
     {
         src.copyTo(dst);
@@ -79,7 +89,16 @@ int Application::showFrame(const std::string &caption,
     Mat srcRoi = display(Rect(0, 0, src.cols, src.rows));
     src.copyTo(srcRoi);
     Mat dstRoi = display(Rect(src.cols, 0, dst.cols, dst.rows));
-    dst.copyTo(dstRoi);       
+    dst.copyTo(dstRoi);      
+
+	if(guiState.saveState)
+	{
+		char buff [50];
+		struct tm * timeinfo = localtime (&name_time);
+		sprintf (buff,"%d.%d.%d.png",timeinfo->tm_hour,timeinfo->tm_min, timeinfo->tm_sec);
+		imwrite(buff, display);
+		guiState.saveState = false;
+	}
     
     drawButtons(display);
     
@@ -107,6 +126,11 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     if (onButtonClicked(elems->offButtonPlace, x, y))
     {
         elems->state = Application::OffFilter;
+        return;
+    }
+	if (onButtonClicked(elems->saveButtonPlace, x, y))
+    {
+        elems->saveState = true;
         return;
     }
 }
