@@ -1,4 +1,6 @@
 #include "processing.hpp"
+#include <stdlib.h>
+#include <time.h>
 
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -8,7 +10,10 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
 {
     src.copyTo(dst);
 
-    cv::Rect region(src.rows/4, src.cols/4, src.rows/2, src.cols/2);
+
+	int random = rand () % 16 + 2;
+
+    cv::Rect region(src.rows/random, src.cols/random, src.rows/2, src.cols/2);
     Mat roi = dst(region);
 
     const int kSize = 11;

@@ -20,7 +20,7 @@ int main(int argc, const char **argv)
 
     if (app.parseArguments(argc, argv, params) != 0)
     {
-        cout << "sample_template <image_name>" << endl;
+        cout << "sample_Kuklina <image_name>" << endl;
         cout << "<image_name> - image name for filtering" << endl;
         return WRONG_ARGUMENTS;
     }
