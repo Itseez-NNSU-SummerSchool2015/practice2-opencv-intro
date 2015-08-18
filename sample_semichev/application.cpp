@@ -42,10 +42,13 @@ int Application::drawButtons(Mat &display)
 {
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
+    guiState.saveButtonPlace = Rect(300, display.rows - 60, 120, 40);
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.offButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
+    rectangle(display, guiState.saveButtonPlace, 
+              Scalar(0, 0, 128), CV_FILLED);
 
     putText(display, "on", 
         Point(guiState.onButtonPlace.x + guiState.onButtonPlace.width / 2 - 15,
@@ -54,6 +57,10 @@ int Application::drawButtons(Mat &display)
     putText(display, "off", 
         Point(guiState.offButtonPlace.x + guiState.offButtonPlace.width / 2 - 20,
               guiState.offButtonPlace.y + guiState.offButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+    putText(display, "Save", 
+        Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 30,
+              guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
@@ -81,6 +88,17 @@ int Application::showFrame(const std::string &caption,
     Mat dstRoi = display(Rect(src.cols, 0, dst.cols, dst.rows));
     dst.copyTo(dstRoi);       
     
+    if (guiState.saveState)
+    {
+        time_t rawTime;
+        struct tm* timeInfo;
+        time(&rawTime);
+        timeInfo = localtime(&rawTime);
+        string str = std::to_string(rawTime);
+        imwrite("picture_" + str + ".png", display);
+        guiState.saveState = false;
+    }
+
     drawButtons(display);
     
     namedWindow(caption);  
@@ -107,6 +125,11 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     if (onButtonClicked(elems->offButtonPlace, x, y))
     {
         elems->state = Application::OffFilter;
+        return;
+    }
+    if (onButtonClicked(elems->saveButtonPlace, x, y))
+    {
+        elems->saveState = true;
         return;
     }
 }

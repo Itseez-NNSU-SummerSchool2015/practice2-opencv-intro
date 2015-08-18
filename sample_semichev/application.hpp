@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <opencv2/core/core.hpp>
+#include <ctime>
 
 #include "processing.hpp"
 
@@ -24,8 +25,10 @@ class Application
     struct GUIElementsState
     {
         WindowState state;
+        bool saveState;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
+        cv::Rect saveButtonPlace;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
@@ -37,6 +40,7 @@ class Application
     Application() 
     { 
         guiState.state = OnFilter;
+        guiState.saveState = false;
     };
 
  private:
