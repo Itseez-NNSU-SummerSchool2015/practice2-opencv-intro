@@ -1,6 +1,7 @@
 #include "processing.hpp"
 
 #include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>//TODO:delete
 
 using namespace cv;
 
@@ -10,6 +11,15 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, cv::Rect region)
 
     Mat roi = dst(region);
     if(applyEdges){
+        Mat buf;
+        cvtColor(roi, buf, CV_RGB2GRAY);
+        GaussianBlur(buf, buf, Size(3, 3), 1.6);
+        Canny(buf,buf,60,200);
+        vector<Mat> rgb;
+        rgb.push_back(buf);
+        rgb.push_back(buf);
+        rgb.push_back(buf);
+        merge(rgb, roi);        
     }
     if(applyPixel){
     }
@@ -23,13 +33,15 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, cv::Rect region)
         merge(rgb, roi);
     }
     const int kSize = 11;
-    medianBlur(roi, roi, kSize);
+    if(!applyEdges && !applyGray && !applyPixel){
+        medianBlur(roi, roi, kSize);
+    }
 
     rectangle(dst, region, Scalar(255, 0, 0));
 }
 
 Processing::Processing(){
     applyEdges = false;
-    applyGray = true;
+    applyGray = false;
     applyPixel = false;
 }
