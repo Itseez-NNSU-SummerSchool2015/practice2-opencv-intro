@@ -1,6 +1,7 @@
 #include "application.hpp"
 #include "processing.hpp"
 
+#include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
 using namespace cv;
@@ -19,6 +20,7 @@ int Application::parseArguments(int argc, const char **argv,
 int Application::getFrame(const std::string &fileName, Mat& src)
 {
     src = imread(fileName);
+	resize(src, src, Size(500, 500));
     if (src.empty())
     {
         return 1;
