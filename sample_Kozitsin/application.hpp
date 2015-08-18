@@ -26,6 +26,7 @@ class Application
         WindowState state;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
+        cv::Rect saveButtonPlace;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
