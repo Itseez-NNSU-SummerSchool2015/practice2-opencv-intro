@@ -144,7 +144,9 @@ int Application::showFrame(const std::string &caption,
 
 	
 	  // сгенерировать название изображения
-		string str = std::to_string(rawtime); 
+		std::ostringstream oss;
+		oss << rawtime;
+		string str = oss.str(); 
 		string name_img = "image_sample_ekaterina_maljutina_"  ;  
 		 
 	  // <image_name> - сгенерированное название изображения
