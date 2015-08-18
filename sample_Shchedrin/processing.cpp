@@ -29,8 +29,6 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, cv::Rect region)
                 Point center(square.x + square.width/2, square.y + square.height /2);
                 Scalar color = mean(roi(square));
                 roi(square).setTo(Scalar(0,0,0));
-                //roi(square).setTo(color);
-                //Mat mask(roi.rows / pixelSize, roi.cols/pixelSize, CV_8UC3);
                 circle(roi(square), Point(pixelSize/2, pixelSize/2), pixelSize/2, color, -1);
             }
         }
