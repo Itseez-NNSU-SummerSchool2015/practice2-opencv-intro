@@ -1,12 +1,14 @@
-﻿Build started 8/18/2015 2:58:01 PM.
+﻿Build started 8/18/2015 3:50:31 PM.
      1>Project "C:\Temp\moshkina\practice2-opencv-intro\sample_moshkina\sample_moshkina.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "sample_moshkina.dir\Debug\sample_moshkina.unsuccessfulbuild" because "AlwaysCreate" was specified.
        CustomBuild:
          All outputs are up-to-date.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"C:/OpenCV-2.4.11/opencv/build/include" /I"C:/OpenCV-2.4.11/opencv/build/include/opencv" /Zi /nologo /W3 /WX- /Od /Ob0 /D WIN32 /D _WINDOWS /D _DEBUG /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"sample_moshkina.dir\Debug\\" /Fd"C:/Temp/moshkina/practice2-opencv-intro/bin/sample_moshkina.pdb" /Gd /TP /errorReport:prompt processing.cpp
-         processing.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"C:/OpenCV-2.4.11/opencv/build/include" /I"C:/OpenCV-2.4.11/opencv/build/include/opencv" /Zi /nologo /W3 /WX- /Od /Ob0 /D WIN32 /D _WINDOWS /D _DEBUG /D "CMAKE_INTDIR=\"Debug\"" /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"sample_moshkina.dir\Debug\\" /Fd"C:/Temp/moshkina/practice2-opencv-intro/bin/sample_moshkina.pdb" /Gd /TP /errorReport:prompt application.cpp
+         application.cpp
+     1>application.cpp(104): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\time.inl(112) : see declaration of 'localtime'
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:

@@ -15,7 +15,8 @@ class Application
     enum WindowState
     {
         OnFilter,
-        OffFilter
+        OffFilter,
+		savePic
     };
     struct Parameters
     {
@@ -24,8 +25,10 @@ class Application
     struct GUIElementsState
     {
         WindowState state;
+		bool saveState;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
+		cv::Rect saveButtonPlace;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
@@ -37,6 +40,7 @@ class Application
     Application() 
     { 
         guiState.state = OnFilter;
+		guiState.saveState=false;
     };
 
  private:
