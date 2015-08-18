@@ -27,6 +27,7 @@ class Application
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
 		cv::Rect newButtom;
+		bool save;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
@@ -38,6 +39,7 @@ class Application
     Application() 
     { 
         guiState.state = OnFilter;
+		guiState.save = false;
     };
 
  private:

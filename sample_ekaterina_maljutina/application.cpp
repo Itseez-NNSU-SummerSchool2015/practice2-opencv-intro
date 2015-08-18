@@ -1,6 +1,6 @@
 #include "application.hpp"
 #include "processing.hpp"
-
+#include "ctime"
 #include <opencv2/highgui/highgui.hpp>
 
 using namespace cv;
@@ -73,6 +73,7 @@ int Application::drawButtons(Mat &display)
 int Application::showFrame(const std::string &caption, 
         const Mat& src, Mat& dst)
 {
+	
     if (guiState.state == OffFilter)
     {
         src.copyTo(dst);
@@ -90,8 +91,35 @@ int Application::showFrame(const std::string &caption,
     Mat srcRoi = display(Rect(0, 0, src.cols, src.rows));
     src.copyTo(srcRoi);
     Mat dstRoi = display(Rect(src.cols, 0, dst.cols, dst.rows));
-    dst.copyTo(dstRoi);       
-    
+    dst.copyTo(dstRoi);     
+
+    if (guiState.save)
+	{
+		
+	  // получить текущее время
+		time_t rawtime;
+		struct tm * timeinfo;
+		//char buffer[80];
+
+		time (&rawtime);
+		timeinfo = localtime(&rawtime);
+
+		//strftime(buffer,80,"%d-%m-%Y %I:%M:%S",timeinfo);
+		//std::string str(buffer);
+	  // сгенерировать название изображения
+		string str = std::to_string(rawtime); // = asctime(timeinfo);
+		string name_img = "image_sample_ekaterina_maljutina_"  ; //str + 
+		 
+	  // <image_name> - сгенерированное название изображения
+	  //                с меткой текущего времени
+
+		imwrite(name_img  +str +  ".jpg" , display);
+
+		guiState.save = false;
+	  // вызвать функцию сохранения imwrite(<image_name>, display)
+	  // сбросить значение guiState.saveState в false
+	}
+
     drawButtons(display);
     
     namedWindow(caption);  
@@ -118,6 +146,11 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     if (onButtonClicked(elems->offButtonPlace, x, y))
     {
         elems->state = Application::OffFilter;
+        return;
+    }
+	if (onButtonClicked(elems->newButtom, x, y))
+    {
+		elems->save = true;
         return;
     }
 }
