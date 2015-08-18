@@ -26,6 +26,7 @@ class Application
         WindowState state;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
+		cv::Rect saveButtonPlace;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
@@ -34,6 +35,8 @@ class Application
                   const cv::Mat& src, cv::Mat& dst);
     friend void onButtonsOnOffClick(int eventId, int x, int y, 
                                     int flags, void *userData);
+	friend void onButtonSaveClick(int eventId, int x, int y, 
+									int flags, void *userData);
     Application() 
     { 
         guiState.state = OnFilter;
@@ -42,6 +45,10 @@ class Application
  private:
     Processing processor;
     GUIElementsState guiState;
+	struct ButonSaveClickHandleArgs {
+		cv::Mat* dstBuf;
+	};
+	ButonSaveClickHandleArgs butonSaveClickHandleArgs;
 
     int drawButtons(cv::Mat &display);
     
