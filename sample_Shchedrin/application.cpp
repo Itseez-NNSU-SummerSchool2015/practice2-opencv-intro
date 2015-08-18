@@ -2,6 +2,8 @@
 #include "processing.hpp"
 
 #include <ctime>
+#include <stdio.h>
+#include <time.h>
 #include <opencv2/highgui/highgui.hpp>
 
 using namespace cv;
@@ -99,7 +101,6 @@ int Application::showFrame(const std::string &caption,
         tstruct = *localtime(&now);
         strftime(buf, sizeof(buf), "%Y_%m_%d_%H_%M_%S", &tstruct);
         sprintf (filename,"%s.png", buf);
-        printf("%s",filename);
         imwrite(filename,display);
     }
     drawButtons(display);
