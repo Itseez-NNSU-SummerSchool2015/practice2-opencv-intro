@@ -35,12 +35,12 @@ int main(int argc, const char **argv)
     const std::string caption = "OpenCV Sample";
     char key = 0;
     Mat dst(src.rows, src.cols, src.type());
-	int sh=0;
+	int size_of_filter_window=0;
     while (key != 27) // Esc
     {
-		sh++;
-        key = app.showFrame(caption, src, dst, sh, sh);
-		if(sh>100){break;}
+		size_of_filter_window++;
+        key = app.showFrame(caption, src, dst, size_of_filter_window);
+		if(size_of_filter_window>400){break;}
     }
 
 	return OK;
