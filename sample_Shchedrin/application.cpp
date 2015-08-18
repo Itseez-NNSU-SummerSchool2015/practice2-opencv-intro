@@ -26,9 +26,9 @@ int Application::getFrame(const std::string &fileName, Mat& src)
     return 0;
 }
 
-int Application::processFrame(const Mat& src, Mat& dst)
+int Application::processFrame(const Mat& src, Mat& dst, cv::Rect region)
 {
-    processor.processFrame(src, dst);
+    processor.processFrame(src, dst, region);
 
     if (dst.empty())
     {
@@ -68,7 +68,8 @@ int Application::showFrame(const std::string &caption,
     }
     else if (guiState.state == OnFilter)
     {
-        processFrame(src, dst);
+        cv::Rect region(src.rows/4, src.cols/4, src.rows/2, src.cols/2);
+        processFrame(src, dst, region);
     }
     else
     {

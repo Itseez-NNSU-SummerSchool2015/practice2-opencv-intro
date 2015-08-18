@@ -29,7 +29,7 @@ class Application
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
-    int processFrame(const cv::Mat& src, cv::Mat& dst);
+    int processFrame(const cv::Mat& src, cv::Mat& dst, cv::Rect region);
     int showFrame(const std::string &caption, 
                   const cv::Mat& src, cv::Mat& dst);
     friend void onButtonsOnOffClick(int eventId, int x, int y, 
