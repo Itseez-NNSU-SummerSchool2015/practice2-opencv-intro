@@ -1,6 +1,5 @@
 #include "application.hpp"
 #include "processing.hpp"
-#include <windows.h>
 #include <sstream>
 #include <ctime>
 
