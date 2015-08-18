@@ -1,9 +1,12 @@
 #include "application.hpp"
 #include "processing.hpp"
 #include "time.h"
+#include "stdlib.h"
+#include <sstream>
 
 #include <opencv2/highgui/highgui.hpp>
 
+using namespace std;
 using namespace cv;
 
 bool testfunction() { return true; }
@@ -101,8 +104,9 @@ int Application::showFrame(const std::string &caption,
 	  //                с меткой текущего времени
 	  // вызвать функцию сохранения imwrite(<image_name>, display)
 	  // сбросить значение guiState.saveState в false
-		String imgString = "image" + std::to_string(time(0));
-		imwrite(imgString+".jpg",display);
+		std::stringstream ss;
+		ss << "image" << time(0) << ".jpg";
+		imwrite(ss.str(),display);
 		guiState.saveState = false;
 	}
 
