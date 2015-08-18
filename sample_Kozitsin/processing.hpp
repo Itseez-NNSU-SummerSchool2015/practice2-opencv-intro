@@ -5,5 +5,7 @@
 class Processing
 {
  public:
-    void processFrame(const cv::Mat& src, cv::Mat& dst);
+    void processFrameMedian(const cv::Mat& src, cv::Mat& dst);
+    void processFrameGrey(const cv::Mat& src, cv::Mat& dst);
+    void processFrameCanny(const cv::Mat& src, cv::Mat& dst);
 };
