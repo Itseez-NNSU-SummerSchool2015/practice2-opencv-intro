@@ -66,6 +66,8 @@ int Application::drawButtons(Mat &display)
     return 0;
 }
 
+Mat* tmp;
+
 int Application::showFrame(const std::string &caption, 
         const Mat& src, Mat& dst, int size_of_filter_window)
 {
@@ -92,9 +94,10 @@ int Application::showFrame(const std::string &caption,
     
     namedWindow(caption);  
     imshow(caption, display);
+	tmp=&display;
     setMouseCallback(caption, onButtonsOnOffClick, &guiState);
+	//tmp=NULL;
     char key = waitKey(1);
-
     return key;
 }
 
@@ -118,7 +121,8 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     }
 	if (onButtonClicked(elems->thirdButtonPlace, x, y))
     {
-		for(;;){}
+		imwrite("sav.png", *tmp);
+		tmp=NULL;
         return;
     }
 }
