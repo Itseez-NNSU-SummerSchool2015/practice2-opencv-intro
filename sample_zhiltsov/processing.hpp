@@ -6,4 +6,6 @@ class Processing
 {
  public:
     void processFrame(const cv::Mat& src, cv::Mat& dst);
+ private:
+	cv::Rect region;
 };
