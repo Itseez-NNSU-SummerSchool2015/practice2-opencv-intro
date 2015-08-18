@@ -1,6 +1,7 @@
 #include "application.hpp"
 #include "processing.hpp"
 
+#include <ctime>
 #include <opencv2/highgui/highgui.hpp>
 
 using namespace cv;
@@ -90,7 +91,16 @@ int Application::showFrame(const std::string &caption,
     dst.copyTo(dstRoi);       
     if(guiState.saveImage){
         guiState.saveImage = false;
-        imwrite("processed_image.png",display);
+
+        time_t now = time(0);
+        struct tm  tstruct;
+        char buf[80];
+        char filename[100];
+        tstruct = *localtime(&now);
+        strftime(buf, sizeof(buf), "%Y_%m_%d_%H_%M_%S", &tstruct);
+        sprintf (filename,"%s.png", buf);
+        printf("%s",filename);
+        imwrite(filename,display);
     }
     drawButtons(display);
     
