@@ -4,6 +4,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <time.h>
 #include <string>
+#include <iostream>
 
 using namespace cv;
 
@@ -145,7 +146,9 @@ void Application::onButtonClick(int eventId, int x, int y, int flsgs, void *user
     }
 	if (isButtonClicked(app->guiState.saveButtonPlace, x, y)) 
 	{
-		imwrite(std::to_string((long long)clock()) + ".png", *app->butonClickHandleArgs.dstBuf);
+		std::stringstream ss;
+		ss << clock() << ".png";		
+		imwrite(ss.str(), *app->butonClickHandleArgs.dstBuf);
 		return;
 	}
 	if (isButtonClicked(app->guiState.filterBlurButtonPlace, x, y)) 
