@@ -42,9 +42,12 @@ int Application::drawButtons(Mat &display)
 {
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
+	guiState.thirdButtonPlace = Rect(300, display.rows - 60, 120, 40);
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.offButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.thirdButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
 
     putText(display, "on", 
@@ -54,6 +57,10 @@ int Application::drawButtons(Mat &display)
     putText(display, "off", 
         Point(guiState.offButtonPlace.x + guiState.offButtonPlace.width / 2 - 20,
               guiState.offButtonPlace.y + guiState.offButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+    putText(display, "save", 
+        Point(guiState.thirdButtonPlace.x + guiState.thirdButtonPlace.width / 2 - 20,
+              guiState.thirdButtonPlace.y + guiState.thirdButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
