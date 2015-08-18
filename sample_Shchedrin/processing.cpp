@@ -22,6 +22,7 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, cv::Rect region)
         merge(rgb, roi);        
     }
     if(applyPixel){
+
     }
     if(applyGray){
         Mat buf;
@@ -33,7 +34,7 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, cv::Rect region)
         merge(rgb, roi);
     }
     const int kSize = 11;
-    if(!applyEdges && !applyGray && !applyPixel){
+    if(applyMedian){
         medianBlur(roi, roi, kSize);
     }
 

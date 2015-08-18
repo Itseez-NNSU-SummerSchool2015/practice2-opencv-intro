@@ -5,7 +5,7 @@
 class Processing
 {
  public:
-    bool applyGray, applyPixel, applyEdges;
+    bool applyGray, applyPixel, applyEdges, applyMedian;
     void processFrame(const cv::Mat& src, cv::Mat& dst, cv::Rect region);
     Processing();
 };

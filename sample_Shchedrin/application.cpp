@@ -34,7 +34,7 @@ int Application::processFrame(const Mat& src, Mat& dst, cv::Rect region)
     processor.applyEdges = guiState.edgesEnabled;
     processor.applyPixel = guiState.pixelEnabled;
     processor.applyGray = guiState.grayEnabled;
-
+    processor.applyMedian = guiState.medianEnabled;
     processor.processFrame(src, dst, region);
     if (dst.empty())
     {
@@ -52,7 +52,7 @@ int Application::drawButtons(Mat &display)
     guiState.grayscaleButtonPlace = Rect(20 + 140 * 3, display.rows - 60, 120, 40);
     guiState.pixelButtonPlace =     Rect(20 + 140 * 4, display.rows - 60, 120, 40);
     guiState.edgesButtonPlace =     Rect(20 + 140 * 5, display.rows - 60, 120, 40);
-
+    guiState.medianButtonPlace =    Rect(20 + 140 * 6, display.rows - 60, 120, 40);
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.offButtonPlace, 
@@ -83,6 +83,14 @@ int Application::drawButtons(Mat &display)
     rectangle(display, guiState.edgesButtonPlace, 
              color, CV_FILLED);
 
+    if(guiState.medianEnabled){
+        color = Scalar(128,200,128);
+    }else{
+        color = Scalar(128,128,128);
+    }
+    rectangle(display, guiState.medianButtonPlace, 
+             color, CV_FILLED);
+
     putText(display, "on", 
         Point(guiState.onButtonPlace.x + guiState.onButtonPlace.width / 2 - 15,
               guiState.onButtonPlace.y + guiState.onButtonPlace.height / 2 + 10),
@@ -106,6 +114,12 @@ int Application::drawButtons(Mat &display)
     putText(display, "edges", 
         Point(guiState.edgesButtonPlace.x + guiState.edgesButtonPlace.width / 2 - 35,
               guiState.edgesButtonPlace.y + guiState.edgesButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+    putText(display, "median", 
+        Point(guiState.medianButtonPlace.x + 
+              guiState.medianButtonPlace.width / 2 - 55,
+              guiState.medianButtonPlace.y + 
+              guiState.medianButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
@@ -191,6 +205,11 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     if (onButtonClicked(elems->edgesButtonPlace, x, y))
     {
         elems->edgesEnabled = !elems->edgesEnabled;
+        return;
+    }
+    if (onButtonClicked(elems->medianButtonPlace, x, y))
+    {
+        elems->medianEnabled = !elems->medianEnabled;
         return;
     }
 }

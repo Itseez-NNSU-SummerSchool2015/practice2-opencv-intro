@@ -27,6 +27,7 @@ class Application
         bool grayEnabled;
         bool pixelEnabled;
         bool edgesEnabled;
+        bool medianEnabled;
         WindowState state;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
@@ -34,6 +35,7 @@ class Application
         cv::Rect grayscaleButtonPlace;
         cv::Rect pixelButtonPlace;
         cv::Rect edgesButtonPlace;
+        cv::Rect medianButtonPlace;
     };
     int parseArguments(int argc, const char **argv, Parameters &params);
     int getFrame(const std::string &fileName, cv::Mat& src);
