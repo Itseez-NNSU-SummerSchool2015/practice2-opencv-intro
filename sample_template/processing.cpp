@@ -8,7 +8,7 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
 {
     src.copyTo(dst);
 
-    cv::Rect region(src.rows/4, src.cols/4, src.rows/2, src.cols/2);
+    cv::Rect region(src.rows/4, src.cols/4, 3*src.rows/4, 3*src.cols/4);
     Mat roi = dst(region);
 
     const int kSize = 11;
