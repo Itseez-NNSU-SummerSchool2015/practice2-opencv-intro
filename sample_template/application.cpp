@@ -1,5 +1,7 @@
 #include "application.hpp"
 #include "processing.hpp"
+#include "string"
+std::string get_name_of_file_where_to_save_display();
 
 #include <opencv2/highgui/highgui.hpp>
 
@@ -96,7 +98,6 @@ int Application::showFrame(const std::string &caption,
     imshow(caption, display);
 	tmp=&display;
     setMouseCallback(caption, onButtonsOnOffClick, &guiState);
-	//tmp=NULL;
     char key = waitKey(1);
     return key;
 }
@@ -121,8 +122,11 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     }
 	if (onButtonClicked(elems->thirdButtonPlace, x, y))
     {
-		imwrite("sav.png", *tmp);
-		tmp=NULL;
+		std::string s=get_name_of_file_where_to_save_display();
+		imwrite(s, *tmp);
+		//imwrite("gh_fg_23.png", *tmp);
+		std::cout<<s;
+	    tmp=NULL;
         return;
     }
 }
