@@ -78,7 +78,8 @@ int Application::drawButtons(Mat& display)
 
 int Application::showFrame(const std::string &caption, const Mat& src, Mat& dst)
 {
-    switch (guiState.state) {
+    switch (guiState.state) 
+    {
     case WindowState::OffFilter:
         src.copyTo(dst);
         break;
@@ -88,6 +89,7 @@ int Application::showFrame(const std::string &caption, const Mat& src, Mat& dst)
         break;
 
     default: { throw "Unexpected window state."; }
+    }
 
     Mat display(src.rows, src.cols + dst.cols, src.type());
     Mat srcRoi = display(Rect(0, 0, src.cols, src.rows));
