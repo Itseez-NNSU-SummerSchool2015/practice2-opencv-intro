@@ -21,6 +21,8 @@ add_subdirectory(sample_template)
 # Add you directory here
 # add_subdirectory(sample_YOUR_NAME)
 
+add_subdirectory(sample_grishin)
+
 # REPORT
 message( STATUS "")
 message( STATUS "General configuration for ${PROJECT_NAME}")
