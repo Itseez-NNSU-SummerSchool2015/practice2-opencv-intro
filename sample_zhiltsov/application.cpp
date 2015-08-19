@@ -137,22 +137,22 @@ void Application::onButtonClick(int eventId, int x, int y, int flsgs, void* user
     }
     if (isButtonClicked(app->guiState.filterBlurButtonPlace, x, y)) 
     {
-        app->processor.setFilterType(FilterType::Blur);
+        app->processor.setFilterType(Processing::FilterType::Blur);
         return;
     }
     if (isButtonClicked(app->guiState.filterCannyButtonPlace, x, y)) 
     {
-        app->processor.setFilterType(FilterType::Canny);
+        app->processor.setFilterType(Processing::FilterType::Canny);
         return;
     }
     if (isButtonClicked(app->guiState.filterGrayscaleButtonPlace, x, y)) 
     {
-        app->processor.setFilterType(FilterType::Grayscale);
+        app->processor.setFilterType(Processing::FilterType::Grayscale);
         return;
     }
     if (isButtonClicked(app->guiState.filterPixelizeButtonPlace, x, y)) 
     {
-        app->processor.setFilterType(FilterType::Pixelize);
+        app->processor.setFilterType(Processing::FilterType::Pixelize);
         return;
     }
 }
