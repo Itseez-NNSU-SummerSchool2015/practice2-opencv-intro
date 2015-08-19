@@ -14,7 +14,7 @@ void Processing::setFilterType(const FilterType_t& value)
     filterType = value;
 }
 
-void Processing::updateRoiPosition() 
+void Processing::updateRoiPosition(const cv::Mat& src) 
 {
     region.x = src.rows/4 + region.x * std::abs(sin((double)clock())) * 0.1;
     region.y = src.cols/4 + region.y * std::abs(cos((double)clock())) * 0.1; 
@@ -26,7 +26,7 @@ void Processing::updateRoiPosition()
 void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
 {
     src.copyTo(dst);
-    const Mat roi = dst(region);
+    Mat roi = dst(region);
 
     switch (filterType) {
     case FilterType::Blur: 
@@ -45,7 +45,7 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
         applyCannyFilter(roi, roi);
         break;
 
-    default: { throw std::exception("Unexpected filter type."); }
+    default: { throw "Unexpected filter type."; }
     }
 
     rectangle(dst, region, CV_RGB(255, 0, 0));
@@ -103,7 +103,7 @@ void Processing::applyCannyFilter(const Mat& src, Mat& dst)
     cvtColor(dst, newRoi, CV_BGR2GRAY);
     Canny(newRoi, newRoi, 10, 1);
 
-    const std::vector<Mat> channels;
+    std::vector<Mat> channels;
     channels.push_back(newRoi);
     channels.push_back(newRoi);
     channels.push_back(newRoi);    
@@ -115,7 +115,7 @@ void Processing::applyGrayscaleFilter(const Mat& src, Mat& dst)
     Mat newRoi = src.clone();
     cvtColor(newRoi, newRoi, CV_BGR2GRAY);
 
-    const std::vector<Mat> channels;
+    std::vector<Mat> channels;
     channels.push_back(newRoi);    
     channels.push_back(newRoi);    
     channels.push_back(newRoi);    

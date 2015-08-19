@@ -34,5 +34,5 @@ private:
     void applyGrayscaleFilter(const cv::Mat& src, cv::Mat& dst);
     void applyBlurFilter(const cv::Mat& src, cv::Mat& dst);
 
-    void updateRoiPosition();
+    void updateRoiPosition(const cv::Mat& src);
 };

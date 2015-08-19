@@ -47,11 +47,11 @@ int Application::processFrame(const Mat& src, Mat& dst)
 
 void create_button(const std::string& text, const Rect& rect, Mat& display)
 {
-    rectangle(display, guiState.onButtonPlace, Scalar(128, 128, 128), CV_FILLED);
+    rectangle(display, rect, Scalar(128, 128, 128), CV_FILLED);
     putText(display, text,
         Point(rect.x + rect.width / 2 - 15,
               rect.y + rect.height / 2 + 10),
-        FONT_HERSHEY_SIMPLEX, 1.0, CV_COLOR(0, 0, 0), 2);  
+        FONT_HERSHEY_SIMPLEX, 1.0, CV_RGB(0, 0, 0), 2);  
 }
 
 int Application::drawButtons(Mat& display)
@@ -87,7 +87,7 @@ int Application::showFrame(const std::string &caption, const Mat& src, Mat& dst)
         processFrame(src, dst);
         break;
 
-    default: { throw std::exception("Unexpected window state."); }
+    default: { throw "Unexpected window state."; }
 
     Mat display(src.rows, src.cols + dst.cols, src.type());
     Mat srcRoi = display(Rect(0, 0, src.cols, src.rows));
@@ -108,7 +108,7 @@ int Application::showFrame(const std::string &caption, const Mat& src, Mat& dst)
     return key;
 }
 
-void Application::onButtonClick(int eventId, int x, int y, int flsgs, void *userData) 
+void Application::onButtonClick(int eventId, int x, int y, int flsgs, void* userData) 
 {
     if (eventId != EVENT_LBUTTONDOWN) 
     {
