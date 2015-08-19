@@ -26,10 +26,10 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, cv::Rect region)
         for(int i = 0; pixelSize * i < roi.rows; i++){
             for(int j = 0; pixelSize * j < roi.cols; j++){
                 Rect square(j*pixelSize, i* pixelSize, pixelSize, pixelSize);
-                Point center(square.x + square.width/2, square.y + square.height /2);
+                Mat squareMat = roi(square);
                 Scalar color = mean(roi(square));
-                roi(square).setTo(Scalar(0,0,0));
-                circle(roi(square), Point(pixelSize/2, pixelSize/2), pixelSize/2, color, -1);
+                squareMat.setTo(Scalar(0,0,0));
+                circle(squareMat, Point(pixelSize/2, pixelSize/2), pixelSize/2, color, -1);
             }
         }
     }
