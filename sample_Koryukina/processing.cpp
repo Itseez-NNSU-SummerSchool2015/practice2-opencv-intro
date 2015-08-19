@@ -30,6 +30,43 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst, FilterType filte
 		}
 		case PIXELIZED:
 		{
+			Mat cir = cv::Mat::zeros(roi.size(), CV_8UC1);
+			int bsize = 10;
+
+			for (int i = 0; i < roi.rows; i += bsize)
+			{
+				for (int j = 0; j < roi.cols; j += bsize)
+				{
+					Rect rect = Rect(j, i, bsize, bsize) & 
+									Rect(0, 0, roi.cols, roi.rows);
+
+					Mat sub_dst(roi, rect);
+					sub_dst.setTo(cv::mean(roi(rect)));
+
+					circle(
+						cir, 
+						Point(j+bsize/2, i+bsize/2), 
+						bsize/2-1, 
+						CV_RGB(255,255,255), -1, CV_AA
+					);
+				}
+			}
+
+			Mat cir_32f;
+			cir.convertTo(cir_32f, CV_32F);
+			cv::normalize(cir_32f, cir_32f, 0, 1, NORM_MINMAX);
+
+			Mat dst_32f;
+			roi.convertTo(dst_32f, CV_32F);
+
+			std::vector<Mat> channels;
+			split(dst_32f, channels);
+			for (int i = 0; i < channels.size(); ++i)
+				channels[i] = channels[i].mul(cir_32f);
+
+			merge(channels, dst_32f);
+			dst_32f.convertTo(roi, CV_8U);
+
 
 			break;
 		}
