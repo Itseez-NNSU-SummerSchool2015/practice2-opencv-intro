@@ -18,6 +18,7 @@ set(LIBRARY_DEPS ${OpenCV_LIBS})
 
 # BUILD
 add_subdirectory(sample_template)
+add_subdirectory(sample_zhiltsov)
 # Add you directory here
 # add_subdirectory(sample_YOUR_NAME)
 
