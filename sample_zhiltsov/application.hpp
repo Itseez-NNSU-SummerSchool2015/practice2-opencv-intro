@@ -10,18 +10,23 @@
 class Application
 {
 public:
-    enum class WindowState
+    struct WindowState
     {
-        OnFilter,
-        OffFilter
+        enum 
+        {
+            OnFilter,
+            OffFilter
+        };
     };
+    typedef int WindowState_t;
+
     struct Parameters
     {
         std::string imgFileName;
     };
     struct GUIElementsState
     {
-        WindowState state;
+        WindowState_t state;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
         cv::Rect saveButtonPlace;

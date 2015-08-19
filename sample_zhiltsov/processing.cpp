@@ -2,15 +2,14 @@
 
 #include <opencv2/imgproc/imgproc.hpp>
 #include <time.h>
-#include <initializer_list>
 
 using namespace cv;
 
-Processing::Processing(const FilterType& filterType_) :
+Processing::Processing(const FilterType_t& filterType_) :
     filterType(filterType_)
 {}
 
-void Processing::setFilterType(const FilterType& value)
+void Processing::setFilterType(const FilterType_t& value)
 {
     filterType = value;
 }
@@ -43,7 +42,7 @@ void Processing::processFrame(const cv::Mat& src, cv::Mat& dst)
         break;
 
     case FilterType::Canny:
-        applyCabbyFilter(roi, roi);
+        applyCannyFilter(roi, roi);
         break;
 
     default: { throw std::exception("Unexpected filter type."); }
@@ -104,7 +103,10 @@ void Processing::applyCannyFilter(const Mat& src, Mat& dst)
     cvtColor(dst, newRoi, CV_BGR2GRAY);
     Canny(newRoi, newRoi, 10, 1);
 
-    const std::vector<Mat> channels {newRoi, noewRoi, newRoi};
+    const std::vector<Mat> channels;
+    channels.push_back(newRoi);
+    channels.push_back(newRoi);
+    channels.push_back(newRoi);    
     merge(channels, dst);
 }
 
@@ -113,12 +115,15 @@ void Processing::applyGrayscaleFilter(const Mat& src, Mat& dst)
     Mat newRoi = src.clone();
     cvtColor(newRoi, newRoi, CV_BGR2GRAY);
 
-    const std::vector<Mat> channels {newRoi, noewRoi, newRoi};
+    const std::vector<Mat> channels;
+    channels.push_back(newRoi);    
+    channels.push_back(newRoi);    
+    channels.push_back(newRoi);    
     merge(channels, dst);
 }
 
 void Processing::applyBlurFilter(const Mat& src, Mat& dst) 
 {
     const int kSize = 11;
-    medianBlur(roi, roi, kSize);
+    medianBlur(src, dst, kSize);
 }

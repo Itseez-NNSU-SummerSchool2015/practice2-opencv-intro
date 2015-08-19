@@ -6,22 +6,28 @@
 class Processing
 {
 public:
-    enum class FilterType {
-        Grayscale,
-        Pixelize,
-        Canny,
-        Blur
+    /* Wanted scoped enum here */
+    struct FilterType
+    {
+        enum 
+        {
+            Grayscale,
+            Pixelize,
+            Canny,
+            Blur
+        };
     };
+    typedef int FilterType_t;
 
 
-    Processing(const FilterType& filterType = FilterType::Blur);
+    Processing(const FilterType_t& filterType = FilterType::Blur);
 
     void processFrame(const cv::Mat& src, cv::Mat& dst);
 
-    void setFilterType(const FilterType& filterType);
+    void setFilterType(const FilterType_t& filterType);
 private:
     cv::Rect region;
-    FilterType filterType;
+    FilterType_t filterType;
 
     void applyPixelizeFilter(const cv::Mat& src, cv::Mat& dst);
     void applyCannyFilter(const cv::Mat& src, cv::Mat& dst);
