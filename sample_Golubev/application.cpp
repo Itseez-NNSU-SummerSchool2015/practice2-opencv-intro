@@ -28,7 +28,7 @@ int Application::getFrame(const std::string &fileName, Mat& src)
 
 int Application::processFrame(const Mat& src, Mat& dst)
 {
-    processor.processFrame(src, dst);
+    processor.processFrame(src, dst, guiState.filter);
 
     if (dst.empty())
     {
@@ -43,6 +43,8 @@ int Application::drawButtons(Mat &display)
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
 	guiState.saveButtonPlace = Rect(300, display.rows - 60, 120, 40);
+	guiState.grayButtonPlace = Rect(440, display.rows - 60, 120, 40);
+	guiState.cannyButtonPlace = Rect(580, display.rows - 60, 120, 40);
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.offButtonPlace, 
@@ -50,7 +52,7 @@ int Application::drawButtons(Mat &display)
 	rectangle(display, guiState.saveButtonPlace,
 			  Scalar(128, 128, 128), CV_FILLED);
 
-    putText(display, "on", 
+    putText(display, "Median", 
         Point(guiState.onButtonPlace.x + guiState.onButtonPlace.width / 2 - 15,
               guiState.onButtonPlace.y + guiState.onButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
@@ -60,6 +62,16 @@ int Application::drawButtons(Mat &display)
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 	putText(display, "save",
 		Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 35,
+			  guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
+		FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+
+	putText(display, "Gray",
+		Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 35,
+			  guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
+		FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+
+	putText(display, "Canny",
+		Point(guiState.saveButtonPlace.x + guiState.saveButtonPlace.width / 2 - 30,
 			  guiState.saveButtonPlace.y + guiState.saveButtonPlace.height / 2 + 10),
 		FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
@@ -90,12 +102,9 @@ int Application::showFrame(const std::string &caption,
     
 	if (guiState.saveState)
 	{
-		int t1=clock();
-		char* time="";
-		itoa(t1,time,10);
-		char* image="image ";
-		strcpy(image, time);
-		imwrite(image, display);
+		std::stringstream ss;
+		ss << "image_" << std::time(0) << ".png";
+		imwrite(ss.str(), display);
 		guiState.saveState=false;
 	}
 
@@ -121,7 +130,8 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     if (onButtonClicked(elems->onButtonPlace, x, y))
     {
         elems->state = Application::OnFilter;
-        return;
+		elems->filter = Processing::MEDIAN;
+		return;
     }
     if (onButtonClicked(elems->offButtonPlace, x, y))
     {
