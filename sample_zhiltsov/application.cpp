@@ -132,7 +132,7 @@ void Application::onButtonClick(int eventId, int x, int y, int flsgs, void* user
     {
         std::stringstream ss;
         ss << clock() << ".png";
-        imwrite(ss.str(), *app->butonClickHandleArgs.dstBuf);
+        imwrite(ss.str(), *app->buttonClickHandleArgs.dstBuf);
         return;
     }
     if (isButtonClicked(app->guiState.filterBlurButtonPlace, x, y)) 
