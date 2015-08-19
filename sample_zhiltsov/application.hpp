@@ -6,13 +6,11 @@
 
 #include "processing.hpp"
 
-bool onButtonClicked(cv::Rect buttonPlace, int x, int y);
-void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData);
 
 class Application
 {
- public:
-    enum WindowState
+public:
+    enum class WindowState
     {
         OnFilter,
         OffFilter
@@ -26,34 +24,31 @@ class Application
         WindowState state;
         cv::Rect onButtonPlace;
         cv::Rect offButtonPlace;
-		cv::Rect saveButtonPlace;
-		cv::Rect filterGrayscaleButtonPlace;
-		cv::Rect filterPixelizeButtonPlace;
-		cv::Rect filterCannyButtonPlace;
-		cv::Rect filterBlurButtonPlace;
+        cv::Rect saveButtonPlace;
+        cv::Rect filterGrayscaleButtonPlace;
+        cv::Rect filterPixelizeButtonPlace;
+        cv::Rect filterCannyButtonPlace;
+        cv::Rect filterBlurButtonPlace;
     };
-    int parseArguments(int argc, const char **argv, Parameters &params);
-    int getFrame(const std::string &fileName, cv::Mat& src);
+    int parseArguments(int argc, const char** argv, Parameters& params);
+    int getFrame(const std::string& fileName, cv::Mat& src);
     int processFrame(const cv::Mat& src, cv::Mat& dst);
-    int showFrame(const std::string &caption, 
+    int showFrame(const std::string& caption, 
                   const cv::Mat& src, cv::Mat& dst);
 
-    Application() 
-    { 
-        guiState.state = OnFilter;
-		processor.setFilterType(FilterType::Blur);
-    };
-
- private:
+    Application();
+private:
     Processing processor;
     GUIElementsState guiState;
-	struct ButonClickHandleArgs 
-	{
-		cv::Mat* dstBuf;
-	};
-	ButonClickHandleArgs butonClickHandleArgs;
-	static void onButtonClick(int eventId, int x, int y, int flags, void *userData);
-    static bool isButtonClicked(cv::Rect buttonPlace, int x, int y);
+    struct ButtonClickHandleArgs 
+    {
+        cv::Mat* dstBuf;
+    };
+    ButtonClickHandleArgs buttonClickHandleArgs;
+
 
     int drawButtons(cv::Mat &display);
+
+    static void onButtonClick(int eventId, int x, int y, int flags, void* userData);
+    static bool isButtonClicked(const cv::Rect& buttonPlace, int x, int y);
 };

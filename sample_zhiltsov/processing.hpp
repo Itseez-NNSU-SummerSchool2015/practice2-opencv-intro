@@ -2,24 +2,31 @@
 
 #include <opencv2/core/core.hpp>
 
-struct FilterType {
-	enum {
-		Grayscale,
-		Pixelize,
-		Canny,
-		Blur
-	};
-};
 
 class Processing
 {
- public:
+public:
+    enum class FilterType {
+        Grayscale,
+        Pixelize,
+        Canny,
+        Blur
+    };
+
+
+    Processing(const FilterType& filterType = FilterType::Blur);
+
     void processFrame(const cv::Mat& src, cv::Mat& dst);
 
-	void setFilterType(int filterType);
- private:
-	cv::Rect region;
-	int filterType;
+    void setFilterType(const FilterType& filterType);
+private:
+    cv::Rect region;
+    FilterType filterType;
 
-	void pixelize(const cv::Mat& src, cv::Mat& dst);
+    void applyPixelizeFilter(const cv::Mat& src, cv::Mat& dst);
+    void applyCannyFilter(const cv::Mat& src, cv::Mat& dst);
+    void applyGrayscaleFilter(const cv::Mat& src, cv::Mat& dst);
+    void applyBlurFilter(const cv::Mat& src, cv::Mat& dst);
+
+    void updateRoiPosition();
 };
