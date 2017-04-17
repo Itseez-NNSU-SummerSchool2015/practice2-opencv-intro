@@ -39,6 +39,5 @@ int main(int argc, const char **argv)
     {
         key = app.showFrame(caption, src, dst);
     }
-
 	return OK;
 }
