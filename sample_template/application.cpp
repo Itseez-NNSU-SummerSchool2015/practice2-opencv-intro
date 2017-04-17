@@ -1,5 +1,6 @@
 #include "application.hpp"
 #include "processing.hpp"
+#include "get_name_of_file_where_to_save_display.hpp"
 
 #include <opencv2/highgui/highgui.hpp>
 
@@ -26,9 +27,9 @@ int Application::getFrame(const std::string &fileName, Mat& src)
     return 0;
 }
 
-int Application::processFrame(const Mat& src, Mat& dst)
+int Application::processFrame(const Mat& src, Mat& dst, int size_of_filter_window)
 {
-    processor.processFrame(src, dst);
+    processor.processFrame(src, dst, size_of_filter_window);
 
     if (dst.empty())
     {
@@ -42,9 +43,12 @@ int Application::drawButtons(Mat &display)
 {
     guiState.onButtonPlace = Rect(20, display.rows - 60, 120, 40);
     guiState.offButtonPlace = Rect(160, display.rows - 60, 120, 40);
+	guiState.thirdButtonPlace = Rect(300, display.rows - 60, 120, 40);
     rectangle(display, guiState.onButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
     rectangle(display, guiState.offButtonPlace, 
+              Scalar(128, 128, 128), CV_FILLED);
+	rectangle(display, guiState.thirdButtonPlace, 
               Scalar(128, 128, 128), CV_FILLED);
 
     putText(display, "on", 
@@ -55,12 +59,18 @@ int Application::drawButtons(Mat &display)
         Point(guiState.offButtonPlace.x + guiState.offButtonPlace.width / 2 - 20,
               guiState.offButtonPlace.y + guiState.offButtonPlace.height / 2 + 10),
         FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
+    putText(display, "save", 
+        Point(guiState.thirdButtonPlace.x + guiState.thirdButtonPlace.width / 2 - 20,
+              guiState.thirdButtonPlace.y + guiState.thirdButtonPlace.height / 2 + 10),
+        FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 0, 0), 2);
 
     return 0;
 }
 
+Mat* tmp;
+
 int Application::showFrame(const std::string &caption, 
-        const Mat& src, Mat& dst)
+        const Mat& src, Mat& dst, int size_of_filter_window)
 {
     if (guiState.state == OffFilter)
     {
@@ -68,7 +78,7 @@ int Application::showFrame(const std::string &caption,
     }
     else if (guiState.state == OnFilter)
     {
-        processFrame(src, dst);
+        processFrame(src, dst, size_of_filter_window);
     }
     else
     {
@@ -85,9 +95,9 @@ int Application::showFrame(const std::string &caption,
     
     namedWindow(caption);  
     imshow(caption, display);
+	tmp=&display;
     setMouseCallback(caption, onButtonsOnOffClick, &guiState);
     char key = waitKey(1);
-
     return key;
 }
 
@@ -107,6 +117,12 @@ void onButtonsOnOffClick(int eventId, int x, int y, int flags, void *userData)
     if (onButtonClicked(elems->offButtonPlace, x, y))
     {
         elems->state = Application::OffFilter;
+        return;
+    }
+	if (onButtonClicked(elems->thirdButtonPlace, x, y))
+    {
+		imwrite(get_name_of_file_where_to_save_display(), *tmp);
+	    tmp=NULL;
         return;
     }
 }
